@@ -36,17 +36,33 @@ namespace Snake
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.settingsOKButton1 = new System.Windows.Forms.Button();
             this.settingsSaveAsDefaultButton1 = new System.Windows.Forms.Button();
-            this.controlsButtonLeft = new System.Windows.Forms.Button();
-            this.controlsButtonRight = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-            this.controlsButtonUp = new System.Windows.Forms.Button();
-            this.controlsButtonDown = new System.Windows.Forms.Button();
-            this.controlsButtonShift = new System.Windows.Forms.Button();
-            this.controlsButtonCtrl = new System.Windows.Forms.Button();
-            this.controlsButtonNewGame = new System.Windows.Forms.Button();
-            this.controlsButtonOptions = new System.Windows.Forms.Button();
+            this.controlsComboBoxLeft = new System.Windows.Forms.ComboBox();
+            this.controlsLabelLeft = new System.Windows.Forms.Label();
+            this.controlsLabelRight = new System.Windows.Forms.Label();
+            this.controlsLabelUp = new System.Windows.Forms.Label();
+            this.controlsComboBoxRight = new System.Windows.Forms.ComboBox();
+            this.controlsComboBoxUp = new System.Windows.Forms.ComboBox();
+            this.controlsLabelDown = new System.Windows.Forms.Label();
+            this.controlsComboBoxDown = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.controlsLabelShift = new System.Windows.Forms.Label();
+            this.controlsComboBoxShift = new System.Windows.Forms.ComboBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.controlsLabelNewGame = new System.Windows.Forms.Label();
+            this.controlsComboBoxNewGame = new System.Windows.Forms.ComboBox();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.controlsLabelCtrl = new System.Windows.Forms.Label();
+            this.controlsComboBoxCtrl = new System.Windows.Forms.ComboBox();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.controlsLabelOptions = new System.Windows.Forms.Label();
+            this.controlsComboBoxOptions = new System.Windows.Forms.ComboBox();
             this.settingsTabControl.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -56,6 +72,14 @@ namespace Snake
             this.splitContainer1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // settingsTabControl
@@ -68,7 +92,7 @@ namespace Snake
             this.settingsTabControl.Location = new System.Drawing.Point(0, 0);
             this.settingsTabControl.Name = "settingsTabControl";
             this.settingsTabControl.SelectedIndex = 0;
-            this.settingsTabControl.Size = new System.Drawing.Size(808, 650);
+            this.settingsTabControl.Size = new System.Drawing.Size(817, 667);
             this.settingsTabControl.TabIndex = 0;
             // 
             // tabPage3
@@ -76,7 +100,7 @@ namespace Snake
             this.tabPage3.Location = new System.Drawing.Point(4, 38);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(800, 608);
+            this.tabPage3.Size = new System.Drawing.Size(983, 630);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Appearance";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -107,7 +131,7 @@ namespace Snake
             this.tabPage1.Location = new System.Drawing.Point(4, 38);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(800, 608);
+            this.tabPage1.Size = new System.Drawing.Size(809, 625);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Controls";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -132,24 +156,6 @@ namespace Snake
             this.settingsSaveAsDefaultButton1.Text = "Save As Default";
             this.settingsSaveAsDefaultButton1.UseVisualStyleBackColor = true;
             // 
-            // controlsButtonLeft
-            // 
-            this.controlsButtonLeft.Location = new System.Drawing.Point(3, 3);
-            this.controlsButtonLeft.Name = "controlsButtonLeft";
-            this.controlsButtonLeft.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonLeft.TabIndex = 2;
-            this.controlsButtonLeft.Text = "Left: ";
-            this.controlsButtonLeft.UseVisualStyleBackColor = true;
-            // 
-            // controlsButtonRight
-            // 
-            this.controlsButtonRight.Location = new System.Drawing.Point(293, 3);
-            this.controlsButtonRight.Name = "controlsButtonRight";
-            this.controlsButtonRight.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonRight.TabIndex = 3;
-            this.controlsButtonRight.Text = "Right:";
-            this.controlsButtonRight.UseVisualStyleBackColor = true;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -165,25 +171,25 @@ namespace Snake
             // 
             this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel3);
             this.splitContainer1.Panel2MinSize = 120;
-            this.splitContainer1.Size = new System.Drawing.Size(794, 602);
-            this.splitContainer1.SplitterDistance = 447;
+            this.splitContainer1.Size = new System.Drawing.Size(803, 619);
+            this.splitContainer1.SplitterDistance = 460;
             this.splitContainer1.TabIndex = 8;
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoScroll = true;
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonLeft);
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonRight);
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonUp);
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonDown);
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonShift);
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonCtrl);
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonNewGame);
-            this.flowLayoutPanel1.Controls.Add(this.controlsButtonOptions);
+            this.flowLayoutPanel1.Controls.Add(this.panel1);
+            this.flowLayoutPanel1.Controls.Add(this.panel2);
+            this.flowLayoutPanel1.Controls.Add(this.panel3);
+            this.flowLayoutPanel1.Controls.Add(this.panel4);
+            this.flowLayoutPanel1.Controls.Add(this.panel5);
+            this.flowLayoutPanel1.Controls.Add(this.panel7);
+            this.flowLayoutPanel1.Controls.Add(this.panel6);
+            this.flowLayoutPanel1.Controls.Add(this.panel8);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(794, 447);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(803, 460);
             this.flowLayoutPanel1.TabIndex = 8;
             // 
             // flowLayoutPanel3
@@ -193,68 +199,222 @@ namespace Snake
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(794, 151);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(803, 155);
             this.flowLayoutPanel3.TabIndex = 2;
             // 
-            // controlsButtonUp
+            // controlsComboBoxLeft
             // 
-            this.controlsButtonUp.Location = new System.Drawing.Point(3, 111);
-            this.controlsButtonUp.Name = "controlsButtonUp";
-            this.controlsButtonUp.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonUp.TabIndex = 4;
-            this.controlsButtonUp.Text = "Up: ";
-            this.controlsButtonUp.UseVisualStyleBackColor = true;
+            this.controlsComboBoxLeft.FormattingEnabled = true;
+            this.controlsComboBoxLeft.Location = new System.Drawing.Point(162, 14);
+            this.controlsComboBoxLeft.Name = "controlsComboBoxLeft";
+            this.controlsComboBoxLeft.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxLeft.TabIndex = 10;
             // 
-            // controlsButtonDown
+            // controlsLabelLeft
             // 
-            this.controlsButtonDown.Location = new System.Drawing.Point(293, 111);
-            this.controlsButtonDown.Name = "controlsButtonDown";
-            this.controlsButtonDown.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonDown.TabIndex = 5;
-            this.controlsButtonDown.Text = "Down: ";
-            this.controlsButtonDown.UseVisualStyleBackColor = true;
+            this.controlsLabelLeft.AutoSize = true;
+            this.controlsLabelLeft.Location = new System.Drawing.Point(3, 17);
+            this.controlsLabelLeft.Name = "controlsLabelLeft";
+            this.controlsLabelLeft.Size = new System.Drawing.Size(69, 29);
+            this.controlsLabelLeft.TabIndex = 11;
+            this.controlsLabelLeft.Text = "Left: ";
             // 
-            // controlsButtonShift
+            // controlsLabelRight
             // 
-            this.controlsButtonShift.Location = new System.Drawing.Point(3, 219);
-            this.controlsButtonShift.Name = "controlsButtonShift";
-            this.controlsButtonShift.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonShift.TabIndex = 6;
-            this.controlsButtonShift.Text = "To Wall: ";
-            this.controlsButtonShift.UseVisualStyleBackColor = true;
+            this.controlsLabelRight.AutoSize = true;
+            this.controlsLabelRight.Location = new System.Drawing.Point(3, 17);
+            this.controlsLabelRight.Name = "controlsLabelRight";
+            this.controlsLabelRight.Size = new System.Drawing.Size(86, 29);
+            this.controlsLabelRight.TabIndex = 12;
+            this.controlsLabelRight.Text = "Right: ";
             // 
-            // controlsButtonCtrl
+            // controlsLabelUp
             // 
-            this.controlsButtonCtrl.Location = new System.Drawing.Point(293, 219);
-            this.controlsButtonCtrl.Name = "controlsButtonCtrl";
-            this.controlsButtonCtrl.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonCtrl.TabIndex = 7;
-            this.controlsButtonCtrl.Text = "To Body: ";
-            this.controlsButtonCtrl.UseVisualStyleBackColor = true;
+            this.controlsLabelUp.AutoSize = true;
+            this.controlsLabelUp.Location = new System.Drawing.Point(3, 17);
+            this.controlsLabelUp.Name = "controlsLabelUp";
+            this.controlsLabelUp.Size = new System.Drawing.Size(59, 29);
+            this.controlsLabelUp.TabIndex = 14;
+            this.controlsLabelUp.Text = "Up: ";
             // 
-            // controlsButtonNewGame
+            // controlsComboBoxRight
             // 
-            this.controlsButtonNewGame.Location = new System.Drawing.Point(3, 327);
-            this.controlsButtonNewGame.Name = "controlsButtonNewGame";
-            this.controlsButtonNewGame.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonNewGame.TabIndex = 8;
-            this.controlsButtonNewGame.Text = "New Game: ";
-            this.controlsButtonNewGame.UseVisualStyleBackColor = true;
+            this.controlsComboBoxRight.FormattingEnabled = true;
+            this.controlsComboBoxRight.Location = new System.Drawing.Point(162, 14);
+            this.controlsComboBoxRight.Name = "controlsComboBoxRight";
+            this.controlsComboBoxRight.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxRight.TabIndex = 13;
             // 
-            // controlsButtonOptions
+            // controlsComboBoxUp
             // 
-            this.controlsButtonOptions.Location = new System.Drawing.Point(293, 327);
-            this.controlsButtonOptions.Name = "controlsButtonOptions";
-            this.controlsButtonOptions.Size = new System.Drawing.Size(284, 102);
-            this.controlsButtonOptions.TabIndex = 9;
-            this.controlsButtonOptions.Text = "Options: ";
-            this.controlsButtonOptions.UseVisualStyleBackColor = true;
+            this.controlsComboBoxUp.FormattingEnabled = true;
+            this.controlsComboBoxUp.Location = new System.Drawing.Point(162, 14);
+            this.controlsComboBoxUp.Name = "controlsComboBoxUp";
+            this.controlsComboBoxUp.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxUp.TabIndex = 15;
+            // 
+            // controlsLabelDown
+            // 
+            this.controlsLabelDown.AutoSize = true;
+            this.controlsLabelDown.Location = new System.Drawing.Point(3, 17);
+            this.controlsLabelDown.Name = "controlsLabelDown";
+            this.controlsLabelDown.Size = new System.Drawing.Size(91, 29);
+            this.controlsLabelDown.TabIndex = 16;
+            this.controlsLabelDown.Text = "Down: ";
+            // 
+            // controlsComboBoxDown
+            // 
+            this.controlsComboBoxDown.FormattingEnabled = true;
+            this.controlsComboBoxDown.Location = new System.Drawing.Point(162, 14);
+            this.controlsComboBoxDown.Name = "controlsComboBoxDown";
+            this.controlsComboBoxDown.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxDown.TabIndex = 17;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.controlsComboBoxLeft);
+            this.panel1.Controls.Add(this.controlsLabelLeft);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(342, 74);
+            this.panel1.TabIndex = 18;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.controlsLabelRight);
+            this.panel2.Controls.Add(this.controlsComboBoxRight);
+            this.panel2.Location = new System.Drawing.Point(351, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(342, 74);
+            this.panel2.TabIndex = 19;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.controlsLabelUp);
+            this.panel3.Controls.Add(this.controlsComboBoxUp);
+            this.panel3.Location = new System.Drawing.Point(3, 83);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(342, 74);
+            this.panel3.TabIndex = 20;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.controlsLabelDown);
+            this.panel4.Controls.Add(this.controlsComboBoxDown);
+            this.panel4.Location = new System.Drawing.Point(351, 83);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(342, 74);
+            this.panel4.TabIndex = 21;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.controlsLabelShift);
+            this.panel5.Controls.Add(this.controlsComboBoxShift);
+            this.panel5.Location = new System.Drawing.Point(3, 163);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(342, 74);
+            this.panel5.TabIndex = 22;
+            // 
+            // controlsLabelShift
+            // 
+            this.controlsLabelShift.AutoSize = true;
+            this.controlsLabelShift.Location = new System.Drawing.Point(3, 17);
+            this.controlsLabelShift.Name = "controlsLabelShift";
+            this.controlsLabelShift.Size = new System.Drawing.Size(113, 29);
+            this.controlsLabelShift.TabIndex = 16;
+            this.controlsLabelShift.Text = "To Wall: ";
+            // 
+            // controlsComboBoxShift
+            // 
+            this.controlsComboBoxShift.FormattingEnabled = true;
+            this.controlsComboBoxShift.Location = new System.Drawing.Point(162, 14);
+            this.controlsComboBoxShift.Name = "controlsComboBoxShift";
+            this.controlsComboBoxShift.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxShift.TabIndex = 17;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.controlsLabelNewGame);
+            this.panel6.Controls.Add(this.controlsComboBoxNewGame);
+            this.panel6.Location = new System.Drawing.Point(3, 243);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(342, 74);
+            this.panel6.TabIndex = 23;
+            // 
+            // controlsLabelNewGame
+            // 
+            this.controlsLabelNewGame.AutoSize = true;
+            this.controlsLabelNewGame.Location = new System.Drawing.Point(3, 17);
+            this.controlsLabelNewGame.Name = "controlsLabelNewGame";
+            this.controlsLabelNewGame.Size = new System.Drawing.Size(153, 29);
+            this.controlsLabelNewGame.TabIndex = 16;
+            this.controlsLabelNewGame.Text = "New Game: ";
+            // 
+            // controlsComboBoxNewGame
+            // 
+            this.controlsComboBoxNewGame.FormattingEnabled = true;
+            this.controlsComboBoxNewGame.Location = new System.Drawing.Point(162, 14);
+            this.controlsComboBoxNewGame.Name = "controlsComboBoxNewGame";
+            this.controlsComboBoxNewGame.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxNewGame.TabIndex = 17;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.controlsLabelCtrl);
+            this.panel7.Controls.Add(this.controlsComboBoxCtrl);
+            this.panel7.Location = new System.Drawing.Point(351, 163);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(342, 74);
+            this.panel7.TabIndex = 24;
+            // 
+            // controlsLabelCtrl
+            // 
+            this.controlsLabelCtrl.AutoSize = true;
+            this.controlsLabelCtrl.Location = new System.Drawing.Point(3, 20);
+            this.controlsLabelCtrl.Name = "controlsLabelCtrl";
+            this.controlsLabelCtrl.Size = new System.Drawing.Size(121, 29);
+            this.controlsLabelCtrl.TabIndex = 16;
+            this.controlsLabelCtrl.Text = "To Body: ";
+            // 
+            // controlsComboBoxCtrl
+            // 
+            this.controlsComboBoxCtrl.FormattingEnabled = true;
+            this.controlsComboBoxCtrl.Location = new System.Drawing.Point(162, 17);
+            this.controlsComboBoxCtrl.Name = "controlsComboBoxCtrl";
+            this.controlsComboBoxCtrl.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxCtrl.TabIndex = 17;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.controlsLabelOptions);
+            this.panel8.Controls.Add(this.controlsComboBoxOptions);
+            this.panel8.Location = new System.Drawing.Point(351, 243);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(342, 74);
+            this.panel8.TabIndex = 25;
+            // 
+            // controlsLabelOptions
+            // 
+            this.controlsLabelOptions.AutoSize = true;
+            this.controlsLabelOptions.Location = new System.Drawing.Point(3, 17);
+            this.controlsLabelOptions.Name = "controlsLabelOptions";
+            this.controlsLabelOptions.Size = new System.Drawing.Size(114, 29);
+            this.controlsLabelOptions.TabIndex = 16;
+            this.controlsLabelOptions.Text = "Options: ";
+            // 
+            // controlsComboBoxOptions
+            // 
+            this.controlsComboBoxOptions.FormattingEnabled = true;
+            this.controlsComboBoxOptions.Location = new System.Drawing.Point(162, 14);
+            this.controlsComboBoxOptions.Name = "controlsComboBoxOptions";
+            this.controlsComboBoxOptions.Size = new System.Drawing.Size(156, 37);
+            this.controlsComboBoxOptions.TabIndex = 17;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 650);
+            this.ClientSize = new System.Drawing.Size(817, 667);
             this.Controls.Add(this.settingsTabControl);
             this.Name = "Form2";
             this.ShowIcon = false;
@@ -268,6 +428,22 @@ namespace Snake
             this.splitContainer1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -281,16 +457,32 @@ namespace Snake
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button settingsSaveAsDefaultButton1;
-        private System.Windows.Forms.Button controlsButtonLeft;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button controlsButtonRight;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
-        private System.Windows.Forms.Button controlsButtonUp;
-        private System.Windows.Forms.Button controlsButtonDown;
-        private System.Windows.Forms.Button controlsButtonShift;
-        private System.Windows.Forms.Button controlsButtonCtrl;
-        private System.Windows.Forms.Button controlsButtonNewGame;
-        private System.Windows.Forms.Button controlsButtonOptions;
+        private System.Windows.Forms.Label controlsLabelLeft;
+        private System.Windows.Forms.ComboBox controlsComboBoxLeft;
+        private System.Windows.Forms.Label controlsLabelRight;
+        private System.Windows.Forms.ComboBox controlsComboBoxRight;
+        private System.Windows.Forms.Label controlsLabelUp;
+        private System.Windows.Forms.ComboBox controlsComboBoxUp;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label controlsLabelDown;
+        private System.Windows.Forms.ComboBox controlsComboBoxDown;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label controlsLabelShift;
+        private System.Windows.Forms.ComboBox controlsComboBoxShift;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label controlsLabelNewGame;
+        private System.Windows.Forms.ComboBox controlsComboBoxNewGame;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Label controlsLabelCtrl;
+        private System.Windows.Forms.ComboBox controlsComboBoxCtrl;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label controlsLabelOptions;
+        private System.Windows.Forms.ComboBox controlsComboBoxOptions;
     }
 }
