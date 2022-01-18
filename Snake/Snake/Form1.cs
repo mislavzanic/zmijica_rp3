@@ -12,7 +12,7 @@ namespace Snake
 {
     public partial class Form1 : Form
     {
-        Settings settings;
+        
         KeysPressed keysPressed;
         List<Tuple<int, int>> snek;
         Tuple<int, int> direction;
@@ -26,7 +26,6 @@ namespace Snake
         public Form1()
         {
             InitializeComponent();
-            settings = new Settings();
             random = new Random();
             keysPressed = new KeysPressed();
             //KeyPreview = true;
@@ -36,7 +35,7 @@ namespace Snake
         private void startGame()
         {
             snek = new List<Tuple<int, int>>();
-            snek.Add(new Tuple<int, int>((int)settings.boardsize/2, (int)settings.boardsize/2));
+            snek.Add(new Tuple<int, int>((int)Properties.Settings.Default["boardsize"]/2, (int)Properties.Settings.Default["boardsize"]/2));
             direction = new Tuple<int, int>(1, 0);
             walls = new List<Tuple<int, int>>();
             makeWalls();
@@ -47,7 +46,7 @@ namespace Snake
             score = 0;
             scoreLabel.Text = "Score: " + score.ToString();
             canvasControl1.Focus();
-            timer1.Interval = settings.timerInterval;
+            timer1.Interval = (int)Properties.Settings.Default["timerInterval"];
             timer1.Start();
         }
 
@@ -60,26 +59,26 @@ namespace Snake
 
         private void makeWalls()
         {
-            if (settings.walls)
+            if ((bool)Properties.Settings.Default["walls"])
             {
-                for (int i = 0; i < settings.boardsize; i++)
+                for (int i = 0; i < (int)Properties.Settings.Default["boardsize"]; i++)
                 {
                     walls.Add(new Tuple<int, int>(0, i));
                 }
-                for (int i = 1; i < settings.boardsize; i++)
+                for (int i = 1; i < (int)Properties.Settings.Default["boardsize"]; i++)
                 {
                     walls.Add(new Tuple<int, int>(i, 0));
                 }
-                for (int i = 1; i < settings.boardsize; i++)
+                for (int i = 1; i < (int)Properties.Settings.Default["boardsize"]; i++)
                 {
-                    walls.Add(new Tuple<int, int>((int)settings.boardsize - 1, i));
+                    walls.Add(new Tuple<int, int>((int)Properties.Settings.Default["boardsize"] - 1, i));
                 }
-                for (int i = 1; i < settings.boardsize - 1; i++)
+                for (int i = 1; i < (int)Properties.Settings.Default["boardsize"] - 1; i++)
                 {
-                    walls.Add(new Tuple<int, int>(i, (int)settings.boardsize - 1));
+                    walls.Add(new Tuple<int, int>(i, (int)Properties.Settings.Default["boardsize"] - 1));
                 }
             }
-            switch (settings.difficulty) // tu dodat za različite težine
+            switch ((int)Properties.Settings.Default["difficulty"]) // tu dodat za različite težine
             {
                 default:
                     break;
@@ -88,7 +87,7 @@ namespace Snake
 
         private void updateBoard()
         {
-            board = new int[settings.boardsize, settings.boardsize];
+            board = new int[(int)Properties.Settings.Default["boardsize"], (int)Properties.Settings.Default["boardsize"]];
             foreach (var element in snek)
             {
                 board[element.Item1, element.Item2] = 1;
@@ -101,17 +100,23 @@ namespace Snake
 
         private void generateFood()
         {
-            uint itemnum = settings.boardsize * settings.boardsize - (uint)snek.Count - (uint)walls.Count;
+            int itemnum = (int)Properties.Settings.Default["boardsize"] * (int)Properties.Settings.Default["boardsize"] - snek.Count - walls.Count;
+            if(itemnum <= 0)
+            {
+                gameOver();
+                return;
+            }
             int foodLoc = random.Next((int)itemnum);
             int k = 0;
-            for (int i = 0; i < settings.boardsize * settings.boardsize; i++)
+            for (int i = 0; i < (int)Properties.Settings.Default["boardsize"] * (int)Properties.Settings.Default["boardsize"]; i++)
             {
-                if (board[i / settings.boardsize, i % settings.boardsize] == 0)
+                Tuple<int, int> coords = new Tuple<int, int>(i / (int)Properties.Settings.Default["boardsize"], i % (int)Properties.Settings.Default["boardsize"]);
+                if (board[coords.Item1, coords.Item2] == 0)
                 {
                     if (k == foodLoc)
                     {
-                        board[i / settings.boardsize, i % settings.boardsize] = 2;
-                        food = new Tuple<int, int>(i / (int)settings.boardsize, i % (int)settings.boardsize);
+                        board[coords.Item1, coords.Item2] = 2;
+                        food = new Tuple<int, int>(coords.Item1, coords.Item2);
                         break;
                     }
                     else
@@ -153,13 +158,13 @@ namespace Snake
                 int newx = snek[0].Item1 + direction.Item1;
                 int newy = snek[0].Item2 + direction.Item2;
 
-                newx = (newx + (int)settings.boardsize) % (int)settings.boardsize;
-                newy = (newy + (int)settings.boardsize) % (int)settings.boardsize;
+                newx = (newx + (int)Properties.Settings.Default["boardsize"]) % (int)Properties.Settings.Default["boardsize"];
+                newy = (newy + (int)Properties.Settings.Default["boardsize"]) % (int)Properties.Settings.Default["boardsize"];
 
                 int eat = 0;
                 for(int i = 0; i < keysPressed.Num; i++)
                 {
-                    if (board[(newx + direction.Item1 * i + (int)settings.boardsize) % (int)settings.boardsize, (newy + direction.Item2 * i + (int)settings.boardsize) % (int)settings.boardsize] == 2)
+                    if (board[(newx + direction.Item1 * i + (int)Properties.Settings.Default["boardsize"]) % (int)Properties.Settings.Default["boardsize"], (newy + direction.Item2 * i + (int)Properties.Settings.Default["boardsize"]) % (int)Properties.Settings.Default["boardsize"]] == 2)
                     {
                         eat = 1;
                     }
@@ -172,8 +177,8 @@ namespace Snake
                 }
                 for(int i = 0; i < keysPressed.Num; i++)
                 {
-                    Tuple<int, int> coords = new Tuple<int, int>((newx + direction.Item1 * i + (int)settings.boardsize) % (int)settings.boardsize,
-                            (newy + direction.Item2 * i + (int)settings.boardsize) % (int)settings.boardsize);
+                    Tuple<int, int> coords = new Tuple<int, int>((newx + direction.Item1 * i + (int)Properties.Settings.Default["boardsize"]) % (int)Properties.Settings.Default["boardsize"],
+                            (newy + direction.Item2 * i + (int)Properties.Settings.Default["boardsize"]) % (int)Properties.Settings.Default["boardsize"]);
                     if (board[coords.Item1, coords.Item2] == 0 || board[coords.Item1, coords.Item2] == 2)
                     {
                         if (i >= keysPressed.Num - newsize)
@@ -211,7 +216,7 @@ namespace Snake
             currentContext = BufferedGraphicsManager.Current;
             myBuffer = currentContext.Allocate(g, canvasControl1.DisplayRectangle);
 
-            myBuffer.Graphics.Clear(settings.bgColor);
+            myBuffer.Graphics.Clear((Color)Properties.Settings.Default["bgColor"]);
             myBuffer.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             if (!activeGame)
             {
@@ -219,22 +224,22 @@ namespace Snake
                 myBuffer.Dispose();
                 return;
             }
-            float rW = canvasControl1.Width / (float)settings.boardsize;
-            float rH = canvasControl1.Height / (float)settings.boardsize;
+            float rW = canvasControl1.Width / (float)(int)Properties.Settings.Default["boardsize"];
+            float rH = canvasControl1.Height / (float)(int)Properties.Settings.Default["boardsize"];
             //Pen pen = new Pen(settings.headColor);
-            SolidBrush brush = new SolidBrush(settings.headColor);
+            SolidBrush brush = new SolidBrush((Color)Properties.Settings.Default["headColor"]);
 
-            for(int i = 0; i < snek.Count; i++)
+            for (int i = 0; i < snek.Count; i++)
             {
                 if(i == 1)
                 {
-                    brush.Color = settings.snekColor;
+                    brush.Color = (Color)Properties.Settings.Default["snekColor"];
                 }
                 myBuffer.Graphics.FillRectangle(brush, rW * (snek[i].Item1 + 0.1f), rH * (snek[i].Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
             }
-            brush.Color = settings.foodColor;
+            brush.Color = (Color)Properties.Settings.Default["foodColor"];
             myBuffer.Graphics.FillRectangle(brush, rW * (food.Item1 + 0.1f), rH * (food.Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
-            brush.Color = settings.obstacleColor;
+            brush.Color = (Color)Properties.Settings.Default["obstacleColor"];
             for (int i = 0; i < walls.Count; i++)
             {
                 myBuffer.Graphics.FillRectangle(brush, rW * (walls[i].Item1 + 0.1f), rH * (walls[i].Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
@@ -250,31 +255,31 @@ namespace Snake
 
         private void KeyPressed(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == settings.left)
+            if (e.KeyCode == (Keys)Properties.Settings.Default["left"])
             {
                 keysPressed.Left = true;
             }
-            else if (e.KeyCode == settings.right)
+            else if (e.KeyCode == (Keys)Properties.Settings.Default["right"])
             {
                 keysPressed.Right = true;
             }
-            else if (e.KeyCode == settings.up)
+            else if (e.KeyCode == (Keys)Properties.Settings.Default["up"])
             {
                 keysPressed.Up = true;
             }
-            else if (e.KeyCode == settings.down)
+            else if (e.KeyCode == (Keys)Properties.Settings.Default["down"])
             {
                 keysPressed.Down = true;
             }
-            else if (e.KeyCode == settings.newGame)
+            else if (e.KeyCode == (Keys)Properties.Settings.Default["newGame"])
             {
                 startGame();
             }
-            else if (e.KeyCode == settings.shift)
+            else if (e.KeyCode == (Keys)Properties.Settings.Default["shift"])
             {
                 keysPressed.Shift = true;
             }
-            else if (e.KeyCode == settings.ctrl)
+            else if (e.KeyCode == (Keys)Properties.Settings.Default["ctrl"])
             {
                 keysPressed.Ctrl = true;
             }
@@ -313,14 +318,14 @@ namespace Snake
 
         private void Form1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if(e.KeyCode == settings.up ||
-                e.KeyCode == settings.down ||
-                e.KeyCode == settings.left ||
-                e.KeyCode == settings.right ||
-                e.KeyCode == settings.options ||
-                e.KeyCode == settings.newGame ||
-                e.KeyCode == settings.shift ||
-                e.KeyCode == settings.ctrl)
+            if(e.KeyCode == (Keys)Properties.Settings.Default["up"] ||
+                e.KeyCode == (Keys)Properties.Settings.Default["down"] ||
+                e.KeyCode == (Keys)Properties.Settings.Default["left"] ||
+                e.KeyCode == (Keys)Properties.Settings.Default["right"] ||
+                e.KeyCode == (Keys)Properties.Settings.Default["options"] ||
+                e.KeyCode == (Keys)Properties.Settings.Default["newGame"] ||
+                e.KeyCode == (Keys)Properties.Settings.Default["shift"] ||
+                e.KeyCode == (Keys)Properties.Settings.Default["ctrl"])
             {
                 e.IsInputKey = true;
             }

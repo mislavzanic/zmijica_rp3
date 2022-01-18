@@ -8,21 +8,222 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-namespace Snake.Properties
-{
+namespace Snake.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool walls {
+            get {
+                return ((bool)(this["walls"]));
+            }
+            set {
+                this["walls"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int boardsize {
+            get {
+                return ((int)(this["boardsize"]));
+            }
+            set {
+                this["boardsize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int timerInterval {
+            get {
+                return ((int)(this["timerInterval"]));
+            }
+            set {
+                this["timerInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int difficulty {
+            get {
+                return ((int)(this["difficulty"]));
+            }
+            set {
+                this["difficulty"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Left")]
+        public global::System.Windows.Forms.Keys left {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["left"]));
+            }
+            set {
+                this["left"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Right")]
+        public global::System.Windows.Forms.Keys right {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["right"]));
+            }
+            set {
+                this["right"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Up")]
+        public global::System.Windows.Forms.Keys up {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["up"]));
+            }
+            set {
+                this["up"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Down")]
+        public global::System.Windows.Forms.Keys down {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["down"]));
+            }
+            set {
+                this["down"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Shift+None")]
+        public global::System.Windows.Forms.Keys shift {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["shift"]));
+            }
+            set {
+                this["shift"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ctrl+None")]
+        public global::System.Windows.Forms.Keys ctrl {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ctrl"]));
+            }
+            set {
+                this["ctrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("N")]
+        public global::System.Windows.Forms.Keys newGame {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["newGame"]));
+            }
+            set {
+                this["newGame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("O")]
+        public global::System.Windows.Forms.Keys options {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["options"]));
+            }
+            set {
+                this["options"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        public global::System.Drawing.Color bgColor {
+            get {
+                return ((global::System.Drawing.Color)(this["bgColor"]));
+            }
+            set {
+                this["bgColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Blue")]
+        public global::System.Drawing.Color headColor {
+            get {
+                return ((global::System.Drawing.Color)(this["headColor"]));
+            }
+            set {
+                this["headColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color snekColor {
+            get {
+                return ((global::System.Drawing.Color)(this["snekColor"]));
+            }
+            set {
+                this["snekColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Green")]
+        public global::System.Drawing.Color foodColor {
+            get {
+                return ((global::System.Drawing.Color)(this["foodColor"]));
+            }
+            set {
+                this["foodColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color obstacleColor {
+            get {
+                return ((global::System.Drawing.Color)(this["obstacleColor"]));
+            }
+            set {
+                this["obstacleColor"] = value;
             }
         }
     }
