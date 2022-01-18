@@ -40,8 +40,6 @@ namespace Snake
             MessageBox.Show("rekt");
         }
 
-
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (keysPressed.Left)
@@ -71,7 +69,6 @@ namespace Snake
             }
             else
             {
-
                 game.tick(keysPressed.Num);
             }
             

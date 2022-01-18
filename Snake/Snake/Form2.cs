@@ -71,5 +71,69 @@ namespace Snake
             combobox.ValueMember = nameof(KeyItem.Code);
             combobox.DataSource = KeyItem.List;
         }
+
+        private void left_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["left"] = keyvalues[controlsComboBoxLeft.SelectedIndex];
+        }
+
+        private void up_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["up"] = keyvalues[controlsComboBoxUp.SelectedIndex];
+        }
+
+        private void to_wall_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["shift"] = keyvalues[controlsComboBoxShift.SelectedIndex];
+
+        }
+
+        private void right_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["right"] = keyvalues[controlsComboBoxRight.SelectedIndex];
+
+        }
+
+        private void down_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["down"] = keyvalues[controlsComboBoxDown.SelectedIndex];
+
+        }
+
+        private void to_body_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["ctrl"] = keyvalues[controlsComboBoxCtrl.SelectedIndex];
+        }
+
+        private void close(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void new_game_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["newGame"] = keyvalues[controlsComboBoxNewGame.SelectedIndex];
+        }
+
+        private void options_index_change(object sender, EventArgs e)
+        {
+            if (controlsComboBoxLeft.SelectedIndex == 0) return;
+            var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
+            Properties.Settings.Default["options"] = keyvalues[controlsComboBoxOptions.SelectedIndex];
+        }
     }
 }
