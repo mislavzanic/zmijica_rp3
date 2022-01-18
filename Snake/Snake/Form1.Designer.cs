@@ -144,7 +144,8 @@ namespace Snake
             this.ClientSize = new System.Drawing.Size(1036, 537);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.ShowIcon = false;
+            this.Text = "Snake";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyPressed);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyReleased);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Form1_PreviewKeyDown);

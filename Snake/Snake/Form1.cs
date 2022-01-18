@@ -21,6 +21,7 @@ namespace Snake
         int[,] board;
         bool activeGame;
         int score;
+        List<Tuple<int, int>> walls;
 
         public Form1()
         {
@@ -35,8 +36,10 @@ namespace Snake
         private void startGame()
         {
             snek = new List<Tuple<int, int>>();
-            snek.Add(new Tuple<int, int>(19, 19));
+            snek.Add(new Tuple<int, int>((int)settings.boardsize/2, (int)settings.boardsize/2));
             direction = new Tuple<int, int>(1, 0);
+            walls = new List<Tuple<int, int>>();
+            makeWalls();
             updateBoard();
             generateFood();
             activeGame = true;
@@ -55,6 +58,34 @@ namespace Snake
             MessageBox.Show("rekt");
         }
 
+        private void makeWalls()
+        {
+            if (settings.walls)
+            {
+                for (int i = 0; i < settings.boardsize; i++)
+                {
+                    walls.Add(new Tuple<int, int>(0, i));
+                }
+                for (int i = 1; i < settings.boardsize; i++)
+                {
+                    walls.Add(new Tuple<int, int>(i, 0));
+                }
+                for (int i = 1; i < settings.boardsize; i++)
+                {
+                    walls.Add(new Tuple<int, int>((int)settings.boardsize - 1, i));
+                }
+                for (int i = 1; i < settings.boardsize - 1; i++)
+                {
+                    walls.Add(new Tuple<int, int>(i, (int)settings.boardsize - 1));
+                }
+            }
+            switch (settings.difficulty) // tu dodat za različite težine
+            {
+                default:
+                    break;
+            }
+        }
+
         private void updateBoard()
         {
             board = new int[settings.boardsize, settings.boardsize];
@@ -62,11 +93,15 @@ namespace Snake
             {
                 board[element.Item1, element.Item2] = 1;
             }
+            foreach (var element in walls)
+            {
+                board[element.Item1, element.Item2] = 3;
+            }
         }
 
         private void generateFood()
         {
-            uint itemnum = settings.boardsize * settings.boardsize - (uint)snek.Count;
+            uint itemnum = settings.boardsize * settings.boardsize - (uint)snek.Count - (uint)walls.Count;
             int foodLoc = random.Next((int)itemnum);
             int k = 0;
             for (int i = 0; i < settings.boardsize * settings.boardsize; i++)
@@ -105,42 +140,65 @@ namespace Snake
             {
                 direction = new Tuple<int, int>(0, 1);
             }
+            if (keysPressed.Shift)
+            {
+
+            }
+            else if (keysPressed.Ctrl)
+            {
+
+            }
+            else
+            {
+                int newx = snek[0].Item1 + direction.Item1;
+                int newy = snek[0].Item2 + direction.Item2;
+
+                newx = (newx + (int)settings.boardsize) % (int)settings.boardsize;
+                newy = (newy + (int)settings.boardsize) % (int)settings.boardsize;
+
+                int eat = 0;
+                for(int i = 0; i < keysPressed.Num; i++)
+                {
+                    if (board[(newx + direction.Item1 * i + (int)settings.boardsize) % (int)settings.boardsize, (newy + direction.Item2 * i + (int)settings.boardsize) % (int)settings.boardsize] == 2)
+                    {
+                        eat = 1;
+                    }
+                }
+                int newsize = snek.Count + eat;
+                for (int i = 0; i < keysPressed.Num - eat && i < newsize; i++)
+                {
+                    board[snek[snek.Count - 1].Item1, snek[snek.Count - 1].Item2] = 0;
+                    snek.RemoveAt(snek.Count - 1);
+                }
+                for(int i = 0; i < keysPressed.Num; i++)
+                {
+                    Tuple<int, int> coords = new Tuple<int, int>((newx + direction.Item1 * i + (int)settings.boardsize) % (int)settings.boardsize,
+                            (newy + direction.Item2 * i + (int)settings.boardsize) % (int)settings.boardsize);
+                    if (board[coords.Item1, coords.Item2] == 0 || board[coords.Item1, coords.Item2] == 2)
+                    {
+                        if (i >= keysPressed.Num - newsize)
+                        {
+                            snek.Insert(0, coords);
+                            board[coords.Item1, coords.Item2] = 1;
+                        }
+                    }
+                    else // 1 ili 3
+                    {
+                        keysPressed.reset();
+                        gameOver();
+                        return;
+                    }
+                }
+                
+                if (eat > 0)
+                {
+                    score += 1;
+                    scoreLabel.Text = "Score: " + score.ToString();
+                    generateFood();
+                }
+            }
+
             keysPressed.reset();
-            int newx = snek[0].Item1 + direction.Item1;
-            int newy = snek[0].Item2 + direction.Item2;
-            if(settings.walls && (newx < 0 || newx >= settings.boardsize || newy < 0 || newy >= settings.boardsize))
-            {
-                gameOver();
-                return;
-            }
-            else
-            {
-                newx = newx % (int)settings.boardsize;
-                newy = newy % (int)settings.boardsize;
-            }
-            if (board[newx, newy] == 2)
-            {
-                snek.Insert(0, new Tuple<int, int>(newx, newy));
-                board[newx, newy] = 1;
-                score += 1;
-                scoreLabel.Text = "Score: " + score.ToString();
-                generateFood();
-            }
-            else
-            {
-                board[snek[snek.Count - 1].Item1, snek[snek.Count - 1].Item2] = 0;
-                snek.RemoveAt(snek.Count - 1);
-                if(board[newx, newy] == 0)
-                {
-                    snek.Insert(0, new Tuple<int, int>(newx, newy));
-                    board[newx, newy] = 1;
-                }
-                else // 1
-                {
-                    gameOver();
-                    return;
-                }
-            }
 
             canvasControl1.Invalidate();
         }
@@ -176,6 +234,11 @@ namespace Snake
             }
             brush.Color = settings.foodColor;
             myBuffer.Graphics.FillRectangle(brush, rW * (food.Item1 + 0.1f), rH * (food.Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+            brush.Color = settings.obstacleColor;
+            for (int i = 0; i < walls.Count; i++)
+            {
+                myBuffer.Graphics.FillRectangle(brush, rW * (walls[i].Item1 + 0.1f), rH * (walls[i].Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+            }
             myBuffer.Render();
             myBuffer.Dispose();
         }
@@ -206,6 +269,22 @@ namespace Snake
             else if (e.KeyCode == settings.newGame)
             {
                 startGame();
+            }
+            else if (e.KeyCode == settings.shift)
+            {
+                keysPressed.Shift = true;
+            }
+            else if (e.KeyCode == settings.ctrl)
+            {
+                keysPressed.Ctrl = true;
+            }
+            else if (e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9)
+            {
+                keysPressed.Num = e.KeyCode - Keys.D0;
+            }
+            else if (e.KeyCode >= Keys.NumPad1 && e.KeyCode <= Keys.NumPad9)
+            {
+                keysPressed.Num = e.KeyCode - Keys.NumPad0;
             }
         }
 
@@ -239,7 +318,9 @@ namespace Snake
                 e.KeyCode == settings.left ||
                 e.KeyCode == settings.right ||
                 e.KeyCode == settings.options ||
-                e.KeyCode == settings.newGame)
+                e.KeyCode == settings.newGame ||
+                e.KeyCode == settings.shift ||
+                e.KeyCode == settings.ctrl)
             {
                 e.IsInputKey = true;
             }

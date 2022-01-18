@@ -8,15 +8,18 @@ using System.Windows.Forms;
 
 namespace Snake
 {
-    class Settings
+    public class Settings
     {
         public bool walls;
         public uint boardsize;
         public int timerInterval;
+        public int difficulty;
         public Keys left;
         public Keys right;
         public Keys up;
         public Keys down;
+        public Keys shift;
+        public Keys ctrl;
         public Keys newGame;
         public Keys options;
         public Color bgColor;
@@ -28,13 +31,16 @@ namespace Snake
         public Settings()
         {
             walls = true;
-            boardsize = 40;
+            boardsize = 20;
             timerInterval = 50;
+            difficulty = 0;
 
             left = Keys.Left;
             right = Keys.Right;
             up = Keys.Up;
             down = Keys.Down;
+            shift = Keys.Shift;
+            ctrl = Keys.Control;
             newGame = Keys.N;
             options = Keys.O;
 

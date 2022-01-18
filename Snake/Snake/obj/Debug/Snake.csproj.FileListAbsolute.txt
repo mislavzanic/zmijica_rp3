@@ -9,3 +9,4 @@ F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.exe
 F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.pdb
 F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.CanvasControl.resources
 F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.csproj.AssemblyReference.cache
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.Form2.resources
