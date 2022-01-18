@@ -46,6 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanvasControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CanvasControl.Designer.cs">
+      <DependentUpon>CanvasControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeysPressed.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +62,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CanvasControl.resx">
+      <DependentUpon>CanvasControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

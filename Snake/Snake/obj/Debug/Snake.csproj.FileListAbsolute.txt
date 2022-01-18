@@ -1,0 +1,11 @@
+F:\RP3projekt\zmijica_rp3\Snake\Snake\bin\Debug\Snake.exe.config
+F:\RP3projekt\zmijica_rp3\Snake\Snake\bin\Debug\Snake.exe
+F:\RP3projekt\zmijica_rp3\Snake\Snake\bin\Debug\Snake.pdb
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.Form1.resources
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.Properties.Resources.resources
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.csproj.GenerateResource.cache
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.exe
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.pdb
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.CanvasControl.resources
+F:\RP3projekt\zmijica_rp3\Snake\Snake\obj\Debug\Snake.csproj.AssemblyReference.cache
