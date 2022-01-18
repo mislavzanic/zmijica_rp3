@@ -338,7 +338,8 @@ namespace Snake
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
-            // prikazati settings
+            Form2 settingsForm = new Form2();
+            settingsForm.ShowDialog();
         }
 
         private void label1_Click(object sender, EventArgs e)
