@@ -182,11 +182,6 @@ namespace Snake
             settingsForm.ShowDialog();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void canvasControl1_Paint(object sender, PaintEventArgs e)
         {
             render(e.Graphics);

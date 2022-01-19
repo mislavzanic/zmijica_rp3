@@ -70,6 +70,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Snek.cs" />
+    <Compile Include="Util.cs" />
     <EmbeddedResource Include="CanvasControl.resx">
       <DependentUpon>CanvasControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -100,6 +101,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\level1.txt" />
+    <Content Include="assets\level2.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

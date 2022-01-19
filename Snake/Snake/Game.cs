@@ -22,7 +22,7 @@ namespace Snake
         public Game()
         {
             snek = new Snek();  
-            board = new Board(snek);
+            board = new Board(snek, "..\\..\\assets\\level2.txt");
             random = new Random();
             generateFood();
             activeGame = true;
@@ -39,8 +39,8 @@ namespace Snake
                 myBuffer.Dispose();
                 return;
             }
-            float rW = windowWidth / (float)(int)Properties.Settings.Default["boardsize"];
-            float rH = windowHeight / (float)(int)Properties.Settings.Default["boardsize"];
+            float rW = windowWidth / (float)board.BoardSize;
+            float rH = windowHeight / (float)board.BoardSize;
             snek.render(myBuffer, rW, rH);
             board.render(myBuffer, rW, rH);
         }
@@ -82,10 +82,7 @@ namespace Snake
         {
             int itemnum = board.BoardSize * board.BoardSize - snek.Body.Count - board.Walls.Count;
             if(itemnum <= 0)
-            {
-                //gameOver();
                 return;
-            }
             board.generateFood(random.Next(itemnum));
         }
     }

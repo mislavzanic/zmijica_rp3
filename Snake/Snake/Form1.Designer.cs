@@ -54,7 +54,7 @@ namespace Snake
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(285, 436);
             this.flowLayoutPanel1.TabIndex = 0;
@@ -63,7 +63,7 @@ namespace Snake
             // 
             this.newGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.newGameButton.Location = new System.Drawing.Point(2, 2);
-            this.newGameButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.newGameButton.Margin = new System.Windows.Forms.Padding(2);
             this.newGameButton.Name = "newGameButton";
             this.newGameButton.Size = new System.Drawing.Size(255, 85);
             this.newGameButton.TabIndex = 1;
@@ -75,7 +75,7 @@ namespace Snake
             // 
             this.settingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.settingsButton.Location = new System.Drawing.Point(2, 91);
-            this.settingsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(2);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(255, 85);
             this.settingsButton.TabIndex = 2;
@@ -87,7 +87,7 @@ namespace Snake
             // 
             this.highScoreButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.highScoreButton.Location = new System.Drawing.Point(2, 180);
-            this.highScoreButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.highScoreButton.Margin = new System.Windows.Forms.Padding(2);
             this.highScoreButton.Name = "highScoreButton";
             this.highScoreButton.Size = new System.Drawing.Size(255, 85);
             this.highScoreButton.TabIndex = 4;
@@ -104,7 +104,6 @@ namespace Snake
             this.scoreLabel.Size = new System.Drawing.Size(75, 26);
             this.scoreLabel.TabIndex = 3;
             this.scoreLabel.Text = "Score:";
-            this.scoreLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // timer1
             // 
@@ -115,9 +114,9 @@ namespace Snake
             // 
             this.canvasControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvasControl1.Location = new System.Drawing.Point(0, 0);
-            this.canvasControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.canvasControl1.Margin = new System.Windows.Forms.Padding(4);
             this.canvasControl1.Name = "canvasControl1";
-            this.canvasControl1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.canvasControl1.Padding = new System.Windows.Forms.Padding(2);
             this.canvasControl1.Size = new System.Drawing.Size(489, 436);
             this.canvasControl1.TabIndex = 0;
             this.canvasControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.canvasControl1_Paint);
@@ -129,7 +128,7 @@ namespace Snake
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -150,7 +149,7 @@ namespace Snake
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 436);
             this.Controls.Add(this.splitContainer1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "Snake";

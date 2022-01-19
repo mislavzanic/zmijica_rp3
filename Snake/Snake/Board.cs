@@ -17,20 +17,16 @@ namespace Snake
 
         public List<Coord> Walls { get => walls; }
         public int BoardSize { get => boardSize; }
-        public Board(Snek snek)
+        public Board(Snek snek, String filepath)
         {
+            board = Util.loadMatrix(filepath);
+            boardSize = board.GetLength(0);
             walls = new List<Coord>();
-            boardSize = (int)Properties.Settings.Default["boardsize"];
             makeWalls();
             
-            board = new int[boardSize, boardSize];
             foreach (var element in snek.Body)
             {
                 board[element.Item1, element.Item2] = 1;
-            }
-            foreach (var element in walls)
-            {
-                board[element.Item1, element.Item2] = 3;
             }
         }
 
@@ -83,29 +79,12 @@ namespace Snake
 
         private void makeWalls()
         {
-            if ((bool)Properties.Settings.Default["walls"])
+            for (int i = 0; i < boardSize; ++i)
             {
-                for (int i = 0; i < boardSize; i++)
+                for (int j = 0; j < boardSize; ++j)
                 {
-                    walls.Add(new Coord(0, i));
+                    if (board[i, j] == 3) walls.Add(new Coord(i, j));
                 }
-                for (int i = 1; i < boardSize; i++)
-                {
-                    walls.Add(new Coord(i, 0));
-                }
-                for (int i = 1; i < boardSize; i++)
-                {
-                    walls.Add(new Coord(boardSize - 1, i));
-                }
-                for (int i = 1; i < boardSize - 1; i++)
-                {
-                    walls.Add(new Coord(i, boardSize - 1));
-                }
-            }
-            switch ((int)Properties.Settings.Default["difficulty"]) // tu dodat za različite težine
-            {
-                default:
-                    break;
             }
         }
 
