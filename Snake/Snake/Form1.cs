@@ -44,19 +44,19 @@ namespace Snake
         {
             if (keysPressed.Left)
             {
-                game.newSnakeDirection(new Tuple<int,int>(-1,0));
+                game.handleInput(new Tuple<int,int>(-1,0));
             }
             else if (keysPressed.Right)
             {
-                game.newSnakeDirection(new Tuple<int,int>(1,0));
+                game.handleInput(new Tuple<int,int>(1,0));
             }
             else if (keysPressed.Up)
             {
-                game.newSnakeDirection(new Tuple<int,int>(0,-1));
+                game.handleInput(new Tuple<int,int>(0,-1));
             }
             else if (keysPressed.Down)
             {
-                game.newSnakeDirection(new Tuple<int,int>(0,1));
+                game.handleInput(new Tuple<int,int>(0,1));
             }
 
             if (keysPressed.Shift)

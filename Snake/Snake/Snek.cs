@@ -18,17 +18,13 @@ namespace Snake
         {
             get => direction;
             set => direction = value;
-            //{
-                //direction = value;
-                //move();
-            //}
         }
 
-        public Snek()
+        public Snek(int startX, int startY)
         {
             body = new List<Coord>();
-            body.Add(new Coord((int)Properties.Settings.Default["boardsize"]/2, (int)Properties.Settings.Default["boardsize"]/2));
-            direction = new Coord(1, 0);
+            body.Add(new Coord(startX, startY));
+            direction = new Coord(0, 0);
         }
 
         public void render(BufferedGraphics myBuffer, float rW, float rH)

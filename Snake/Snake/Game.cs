@@ -11,79 +11,51 @@ namespace Snake
     internal class Game
     {
         private Snek snek;
-        private Board board;
-        private Random random;
         private bool activeGame;
         private int score;
+        private Level currLevel;
 
+        public event EventHandler<int> scoreChange;
         public int Score { get => score; }
         public bool ActiveGame { get => activeGame; }
         
         public Game()
         {
-            snek = new Snek();  
-            board = new Board(snek, "..\\..\\assets\\level2.txt");
-            random = new Random();
-            generateFood();
+            currLevel = new Level("..\\..\\assets\\level1.txt");
             activeGame = true;
             score = 0;
         }
 
         public void render(BufferedGraphics myBuffer, int windowWidth, int windowHeight)
         {
-            myBuffer.Graphics.Clear((Color)Properties.Settings.Default["bgColor"]);
-            myBuffer.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            if (!activeGame)
-            {
-                myBuffer.Render();
-                myBuffer.Dispose();
-                return;
-            }
-            float rW = windowWidth / (float)board.BoardSize;
-            float rH = windowHeight / (float)board.BoardSize;
-            snek.render(myBuffer, rW, rH);
-            board.render(myBuffer, rW, rH);
+            currLevel.render(myBuffer, windowWidth, windowHeight);
         }
 
         public void tick(int moveCount = 1)
         {
-            bool generateNew = false;
-            while (moveCount > 0)
+            currLevel.tick(moveCount);
+            if (!currLevel.ActiveGame)
             {
-                Coord tail = snek.move();
-                int item = board.getItem(snek.Body.First());
-                if (item == 1 || item == 3)
-                {
-                    activeGame = false;
-                    return;
-                }
-                else if (item == 2)
-                {
-                    snek.Body.Add(tail);
-                    board.update(snek);
-                    generateNew = true;
-                    score++;
-                }
-                else
-                {
-                    board.update(snek,tail);
-                }
-                moveCount--;
-            }
-            if (generateNew) generateFood();
-        }
-
-        public void newSnakeDirection(Coord newDirection)
-        {
-            snek.Direction = newDirection;
-        }
-
-        private void generateFood()
-        {
-            int itemnum = board.BoardSize * board.BoardSize - snek.Body.Count - board.Walls.Count;
-            if(itemnum <= 0)
+                activeGame = false;
                 return;
-            board.generateFood(random.Next(itemnum));
+            }
+            if (currLevel.Score > 10)
+            {
+                score = currLevel.Score;
+                if (scoreChange != null) scoreChange(this, score);
+                currLevel = new Level("..\\..\\assets\\level2.txt");
+            }
+
+            if (currLevel.Score > 11)
+            {
+                activeGame = false;
+                return;
+            }
+        }
+
+        public void handleInput(Coord newDirection)
+        {
+            currLevel.newSnakeDirection(newDirection);
         }
     }
 }
