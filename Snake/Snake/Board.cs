@@ -52,7 +52,11 @@ namespace Snake
             board[tail.Item1, tail.Item2] = 0;
         }
 
-        public int getItem(Coord coord) => board[coord.Item1, coord.Item2];
+        public int getItem(Coord coord)
+        {
+            int x = coord.Item1 % boardSize, y = coord.Item2 % boardSize;
+            return board[x,y];
+        }
 
         public void generateFood(int location)
         {

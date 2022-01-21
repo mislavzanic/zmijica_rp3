@@ -16,12 +16,15 @@ namespace Snake
         private Random random;
         private bool activeGame;
         private int score;
+        private int scoreToPass;
 
         public int Score { get => score; }
+        public int ScoreToPass { get => scoreToPass; }
         public bool ActiveGame { get => activeGame; }
         
-        public Level(string filepath)
+        public Level(string filepath, int scoreToPass)
         {
+            this.scoreToPass = scoreToPass;
             snek = new Snek(10,10);  
             board = new Board(snek, filepath);
             random = new Random();
@@ -52,7 +55,7 @@ namespace Snake
             bool generateNew = false;
             while (moveCount > 0)
             {
-                Coord tail = snek.move();
+                Coord tail = snek.move(board.BoardSize);
                 int item = board.getItem(snek.Body.First());
                 if (item == 1 || item == 3)
                 {
@@ -65,6 +68,11 @@ namespace Snake
                     board.update(snek);
                     generateNew = true;
                     score++;
+                    if (score == scoreToPass)
+                    {
+                        activeGame = false;
+                        return;
+                    }
                 }
                 else
                 {
