@@ -43,7 +43,7 @@ namespace Snake
 
         public Coord move(int boardSize)
         {
-            Coord newHead = new Coord((body.First().Item1 + direction.Item1) % boardSize, (body.First().Item2 + direction.Item2) % boardSize);
+            Coord newHead = new Coord((boardSize + body.First().Item1 + direction.Item1) % boardSize, (boardSize + body.First().Item2 + direction.Item2) % boardSize);
             Coord tail = body.Last();
             body.Remove(tail);
             body.Insert(0, newHead);

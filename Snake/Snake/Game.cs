@@ -14,8 +14,7 @@ namespace Snake
         private bool activeGame;
         private int score;
 
-        public event EventHandler<int> scoreChange;
-        public int Score { get => score; }
+        public int Score { get => (levelStack.Count > 0) ? score + levelStack.First().Score : score; }
         public bool ActiveGame { get => activeGame; }
         
         public Game()

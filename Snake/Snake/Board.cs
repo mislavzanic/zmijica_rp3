@@ -41,21 +41,28 @@ namespace Snake
             }
         }
 
+        private Coord calcCoords(Coord coord)
+        {
+            return new Coord((boardSize + coord.Item1) % boardSize, (boardSize + coord.Item2) % boardSize);
+        }
+
         public void update(Snek snek)
         {
-            board[snek.Body.First().Item1, snek.Body.First().Item2] = 1;
+            var newCoords = calcCoords(snek.Body.First());
+            board[newCoords.Item1, newCoords.Item2] = 1;
         }
 
         public void update(Snek snek, Coord tail)
         {
             update(snek);
-            board[tail.Item1, tail.Item2] = 0;
+            var newCoords = calcCoords(tail);
+            board[newCoords.Item1, newCoords.Item2] = 0;
         }
 
         public int getItem(Coord coord)
         {
-            int x = coord.Item1 % boardSize, y = coord.Item2 % boardSize;
-            return board[x,y];
+            var newCoords = calcCoords(coord);
+            return board[newCoords.Item1,newCoords.Item2];
         }
 
         public void generateFood(int location)

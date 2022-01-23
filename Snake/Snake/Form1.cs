@@ -72,6 +72,7 @@ namespace Snake
                 game.tick(keysPressed.Num);
             }
             
+            scoreLabel.Text = "Score: " + game.Score.ToString();
             keysPressed.reset();
             if (!game.ActiveGame)
             {
