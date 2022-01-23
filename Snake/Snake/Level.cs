@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+
 namespace Snake
 {
 
@@ -17,11 +18,12 @@ namespace Snake
         private bool activeGame;
         private int score;
         private int scoreToPass;
+        private bool skipLevel;
 
         public int Score { get => score; }
         public int ScoreToPass { get => scoreToPass; }
         public bool ActiveGame { get => activeGame; }
-        
+        public bool SkipLevel { get => skipLevel; }
         public Level(string filepath, int scoreToPass)
         {
             this.scoreToPass = scoreToPass;
@@ -30,6 +32,7 @@ namespace Snake
             random = new Random();
             generateFood();
             activeGame = true;
+            skipLevel = false;
             score = 0;
         }
 
@@ -57,8 +60,9 @@ namespace Snake
             {
                 Coord tail = snek.move(board.BoardSize);
                 int item = board.getItem(snek.Body.First());
-                if (item == 1 || item == 3)
+                if (item == 1 || item == 3 || item == 4)
                 {
+                    skipLevel = item == 4;
                     activeGame = false;
                     return;
                 }
@@ -67,6 +71,22 @@ namespace Snake
                     snek.Body.Add(tail);
                     board.update(snek);
                     generateNew = true;
+                    score++;
+                    if (score == scoreToPass)
+                    {
+                        activeGame = false;
+                        return;
+                    }
+                }
+                else if (item == 5)
+                {
+                    board.update(snek);
+                    score--;
+                }
+                else if (item == 6)
+                {
+                    board.update(snek, snek.Body.Last());
+                    snek.Body.Remove(snek.Body.Last());
                     score++;
                     if (score == scoreToPass)
                     {
@@ -93,6 +113,22 @@ namespace Snake
             int itemnum = board.BoardSize * board.BoardSize - snek.Body.Count - board.Walls.Count;
             if(itemnum <= 0)
                 return;
+            if (itemnum > 1 && score > 0 && score % 3 == 0)
+            {
+                var pos = random.Next(itemnum);
+                var pos2 = 0;
+                if (itemnum - pos > pos)
+                {
+                    pos2 = random.Next(itemnum - pos) + pos;
+                }
+                else
+                {
+                    pos2 = random.Next(pos);
+                }
+                if (pos2 == pos) pos2 = pos + 1;
+                board.generateFood(pos, pos2, random.Next(3));
+                return;
+            }
             board.generateFood(random.Next(itemnum));
         }
     }

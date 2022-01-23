@@ -12,7 +12,7 @@ namespace Snake.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.0.3.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -224,6 +224,42 @@ namespace Snake.Properties {
             }
             set {
                 this["obstacleColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128, 255, 255")]
+        public global::System.Drawing.Color skipColor {
+            get {
+                return ((global::System.Drawing.Color)(this["skipColor"]));
+            }
+            set {
+                this["skipColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192, 0, 192")]
+        public global::System.Drawing.Color poisonColor {
+            get {
+                return ((global::System.Drawing.Color)(this["poisonColor"]));
+            }
+            set {
+                this["poisonColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192, 255, 192")]
+        public global::System.Drawing.Color shrinkColor {
+            get {
+                return ((global::System.Drawing.Color)(this["shrinkColor"]));
+            }
+            set {
+                this["shrinkColor"] = value;
             }
         }
     }

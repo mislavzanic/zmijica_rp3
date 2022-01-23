@@ -53,5 +53,14 @@
     <Setting Name="obstacleColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Red</Value>
     </Setting>
+    <Setting Name="skipColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">128, 255, 255</Value>
+    </Setting>
+    <Setting Name="poisonColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">192, 0, 192</Value>
+    </Setting>
+    <Setting Name="shrinkColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">192, 255, 192</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

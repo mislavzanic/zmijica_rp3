@@ -37,7 +37,7 @@ namespace Snake
             if (!levelStack.First().ActiveGame)
             {
                 score += levelStack.First().Score;
-                if (levelStack.First().Score < levelStack.First().ScoreToPass)
+                if (levelStack.First().Score < levelStack.First().ScoreToPass && !levelStack.First().SkipLevel)
                 {
                     levelStack.Clear();
                     activeGame = false;

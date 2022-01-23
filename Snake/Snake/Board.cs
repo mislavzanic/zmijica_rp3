@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Snake
 {
@@ -13,16 +14,22 @@ namespace Snake
         private int[,] board;
         private List<Coord> walls;
         private Coord food;
+        private Tuple<Coord, int> randItem;
+        private List<string> items;
         private int boardSize;
 
         public List<Coord> Walls { get => walls; }
         public int BoardSize { get => boardSize; }
-        public Board(Snek snek, String filepath)
+        public Board(Snek snek, string filepath)
         {
             board = Util.loadMatrix(filepath);
             boardSize = board.GetLength(0);
             walls = new List<Coord>();
             makeWalls();
+            items = new List<string>();
+            items.Add("skipColor");
+            items.Add("poisonColor");
+            items.Add("shrinkColor");
             
             foreach (var element in snek.Body)
             {
@@ -34,6 +41,11 @@ namespace Snake
         {
             SolidBrush brush = new SolidBrush((Color)Properties.Settings.Default["foodColor"]);
             myBuffer.Graphics.FillRectangle(brush, rW * (food.Item1 + 0.1f), rH * (food.Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+            if (randItem != null)
+            {
+                brush.Color = (Color)Properties.Settings.Default[items[randItem.Item2]];
+                myBuffer.Graphics.FillRectangle(brush, rW * (randItem.Item1.Item1 + 0.1f), rH * (randItem.Item1.Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+            }
             brush.Color = (Color)Properties.Settings.Default["obstacleColor"];
             for (int i = 0; i < walls.Count; i++)
             {
@@ -49,6 +61,7 @@ namespace Snake
         public void update(Snek snek)
         {
             var newCoords = calcCoords(snek.Body.First());
+            if (board[newCoords.Item1, newCoords.Item2] >= 4) randItem = null;
             board[newCoords.Item1, newCoords.Item2] = 1;
         }
 
@@ -87,6 +100,40 @@ namespace Snake
             }
             throw new Exception();
         }
+
+        public void generateFood(int location, int location2, int item)
+        {
+            var seen = new List<int>();
+            int k = 0;
+            for (int i = 0; i < boardSize * boardSize; i++)
+            {
+                Coord coords = new Coord(i / boardSize, i % boardSize);
+                if (board[coords.Item1, coords.Item2] == 0)
+                {
+                    if (k == location)
+                    {
+                        board[coords.Item1, coords.Item2] = 2;
+                        food = new Coord(coords.Item1, coords.Item2);
+                        seen.Add(k);
+                        if (seen.Count == 2) return;
+                        k++;
+                    }
+                    else if (k == location2)
+                    {
+                        board[coords.Item1, coords.Item2] = 4 + item;
+                        randItem = new Tuple<Coord, int>(new Coord(coords.Item1, coords.Item2), item);
+                        seen.Add(k);
+                        if (seen.Count == 2) return;
+                        k++;
+                    }
+                    else
+                    {
+                        k++;
+                    }
+                }
+            }
+        }
+
 
         private void makeWalls()
         {
