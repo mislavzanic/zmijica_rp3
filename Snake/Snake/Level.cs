@@ -24,6 +24,7 @@ namespace Snake
         public int ScoreToPass { get => scoreToPass; }
         public bool ActiveGame { get => activeGame; }
         public bool SkipLevel { get => skipLevel; }
+        public Tuple<int, int> snekDirection { get => snek.Direction; }
         public Level(string filepath, int scoreToPass)
         {
             this.scoreToPass = scoreToPass;

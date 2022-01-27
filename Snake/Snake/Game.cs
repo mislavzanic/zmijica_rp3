@@ -28,7 +28,10 @@ namespace Snake
 
         public void render(BufferedGraphics myBuffer, int windowWidth, int windowHeight)
         {
-            levelStack.First().render(myBuffer, windowWidth, windowHeight);
+            if (activeGame)
+            {
+                levelStack.First().render(myBuffer, windowWidth, windowHeight);
+            }
         }
 
         public void tick(int moveCount = 1)
@@ -47,6 +50,11 @@ namespace Snake
                 activeGame = levelStack.Count > 0;
                 return;
             }
+        }
+
+        public Tuple<int, int> getSnakeDirection()
+        {
+            return levelStack.First().snekDirection;
         }
 
         public void handleInput(Coord newDirection)
