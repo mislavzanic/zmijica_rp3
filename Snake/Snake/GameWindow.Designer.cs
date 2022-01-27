@@ -30,42 +30,54 @@
         {
             this.components = new System.ComponentModel.Container();
             this.canvasControl1 = new Snake.CanvasControl();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.newGameButton = new System.Windows.Forms.Button();
+            this.settingsButton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.scoreLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // canvasControl1
             // 
-            this.canvasControl1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.canvasControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvasControl1.Location = new System.Drawing.Point(0, 0);
+            this.canvasControl1.Margin = new System.Windows.Forms.Padding(4);
             this.canvasControl1.Name = "canvasControl1";
-            this.canvasControl1.Size = new System.Drawing.Size(488, 450);
+            this.canvasControl1.Size = new System.Drawing.Size(815, 683);
             this.canvasControl1.TabIndex = 0;
             this.canvasControl1.Load += new System.EventHandler(this.NewGame);
             this.canvasControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.paint);
             this.canvasControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyPressed);
             // 
-            // button1
+            // newGameButton
             // 
-            this.button1.Location = new System.Drawing.Point(614, 31);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 55);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "New Game";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.NewGame);
+            this.newGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.newGameButton.Location = new System.Drawing.Point(4, 4);
+            this.newGameButton.Margin = new System.Windows.Forms.Padding(4);
+            this.newGameButton.Name = "newGameButton";
+            this.newGameButton.Size = new System.Drawing.Size(179, 68);
+            this.newGameButton.TabIndex = 1;
+            this.newGameButton.Text = "New Game";
+            this.newGameButton.UseVisualStyleBackColor = true;
+            this.newGameButton.Click += new System.EventHandler(this.NewGame);
             // 
-            // button2
+            // settingsButton
             // 
-            this.button2.Location = new System.Drawing.Point(614, 92);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(134, 51);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Settings";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.SettingsPreview);
+            this.settingsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.settingsButton.Location = new System.Drawing.Point(4, 80);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(4);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(179, 63);
+            this.settingsButton.TabIndex = 2;
+            this.settingsButton.Text = "Settings";
+            this.settingsButton.UseVisualStyleBackColor = true;
+            this.settingsButton.Click += new System.EventHandler(this.SettingsPreview);
             // 
             // timer1
             // 
@@ -74,35 +86,72 @@
             // scoreLabel
             // 
             this.scoreLabel.AutoSize = true;
-            this.scoreLabel.Location = new System.Drawing.Point(625, 170);
+            this.scoreLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.scoreLabel.Location = new System.Drawing.Point(4, 147);
+            this.scoreLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.scoreLabel.Name = "scoreLabel";
-            this.scoreLabel.Size = new System.Drawing.Size(38, 13);
+            this.scoreLabel.Size = new System.Drawing.Size(86, 29);
             this.scoreLabel.TabIndex = 4;
             this.scoreLabel.Text = "Score:";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.canvasControl1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
+            this.splitContainer1.Size = new System.Drawing.Size(1300, 683);
+            this.splitContainer1.SplitterDistance = 815;
+            this.splitContainer1.TabIndex = 4;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.newGameButton);
+            this.flowLayoutPanel1.Controls.Add(this.settingsButton);
+            this.flowLayoutPanel1.Controls.Add(scoreLabel);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(481, 683);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
             // GameWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.scoreLabel);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.canvasControl1);
+            this.ClientSize = new System.Drawing.Size(1040, 546);
+            this.Controls.Add(this.splitContainer1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GameWindow";
+            this.ShowIcon = false;
             this.Text = "GameWindow";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyPressed);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private CanvasControl canvasControl1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button newGameButton;
+        private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label scoreLabel;
     }
 }
