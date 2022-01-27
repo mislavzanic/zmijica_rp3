@@ -40,16 +40,18 @@ namespace Snake
         public void render(BufferedGraphics myBuffer, float rW, float rH)
         {
             SolidBrush brush = new SolidBrush((Color)Properties.Settings.Default["foodColor"]);
-            myBuffer.Graphics.FillRectangle(brush, rW * (food.Item1 + 0.1f), rH * (food.Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+            Util.FillRect(myBuffer.Graphics, brush, food, rW, rH, 0.2f);
+
             if (randItem != null)
             {
                 brush.Color = (Color)Properties.Settings.Default[items[randItem.Item2]];
-                myBuffer.Graphics.FillRectangle(brush, rW * (randItem.Item1.Item1 + 0.1f), rH * (randItem.Item1.Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+                Util.FillRect(myBuffer.Graphics, brush, randItem.Item1, rW, rH, 0.2f);
             }
+
             brush.Color = (Color)Properties.Settings.Default["obstacleColor"];
             for (int i = 0; i < walls.Count; i++)
             {
-                myBuffer.Graphics.FillRectangle(brush, rW * (walls[i].Item1 + 0.1f), rH * (walls[i].Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+                Util.FillRect(myBuffer.Graphics, brush, walls[i], rW, rH, 0.2f);
             }
         }
 

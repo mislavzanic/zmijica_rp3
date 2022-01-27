@@ -30,14 +30,12 @@ namespace Snake
         public void render(BufferedGraphics myBuffer, float rW, float rH)
         {
             SolidBrush brush = new SolidBrush((Color)Properties.Settings.Default["headColor"]);
+            Util.FillRect(myBuffer.Graphics, brush, body[0], rW, rH, 0.2f);
 
-            for (int i = 0; i < body.Count; i++)
+            brush.Color = (Color)Properties.Settings.Default["snekColor"];
+            for (int i = 1; i < body.Count; i++)
             {
-                if(i == 1)
-                {
-                    brush.Color = (Color)Properties.Settings.Default["snekColor"];
-                }
-                myBuffer.Graphics.FillRectangle(brush, rW * (body[i].Item1 + 0.1f), rH * (body[i].Item2 + 0.1f), 0.8f * rW, 0.8f * rH);
+                Util.FillRect(myBuffer.Graphics, brush, body[i], rW, rH, 0.2f);
             }
         }
 
