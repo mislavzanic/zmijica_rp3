@@ -36,3 +36,4 @@ C:\Users\Mislav\zmijica_rp3\Snake\Snake\obj\Debug\Snake.csproj.GenerateResource.
 C:\Users\Mislav\zmijica_rp3\Snake\Snake\obj\Debug\Snake.csproj.CoreCompileInputs.cache
 C:\Users\Mislav\zmijica_rp3\Snake\Snake\obj\Debug\Snake.exe
 C:\Users\Mislav\zmijica_rp3\Snake\Snake\obj\Debug\Snake.pdb
+C:\Users\Mislav\zmijica_rp3\Snake\Snake\obj\Debug\Snake.GameWindow.resources
