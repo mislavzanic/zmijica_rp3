@@ -36,8 +36,8 @@ namespace Snake
             this.highScoreButton = new System.Windows.Forms.Button();
             this.scoreLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.canvasControl1 = new Snake.CanvasControl();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.canvasControl1 = new Snake.CanvasControl();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -110,20 +110,6 @@ namespace Snake
             this.timer1.Interval = 50;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // canvasControl1
-            // 
-            this.canvasControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.canvasControl1.Location = new System.Drawing.Point(0, 0);
-            this.canvasControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.canvasControl1.Name = "canvasControl1";
-            this.canvasControl1.Padding = new System.Windows.Forms.Padding(2);
-            this.canvasControl1.Size = new System.Drawing.Size(489, 436);
-            this.canvasControl1.TabIndex = 0;
-            this.canvasControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.canvasControl1_Paint);
-            this.canvasControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyPressed);
-            this.canvasControl1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyReleased);
-            this.canvasControl1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Form1_PreviewKeyDown);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -142,6 +128,20 @@ namespace Snake
             this.splitContainer1.SplitterDistance = 489;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // canvasControl1
+            // 
+            this.canvasControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.canvasControl1.Location = new System.Drawing.Point(0, 0);
+            this.canvasControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.canvasControl1.Name = "canvasControl1";
+            this.canvasControl1.Padding = new System.Windows.Forms.Padding(2);
+            this.canvasControl1.Size = new System.Drawing.Size(489, 436);
+            this.canvasControl1.TabIndex = 0;
+            this.canvasControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.canvasControl1_Paint);
+            this.canvasControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyPressed);
+            this.canvasControl1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyReleased);
+            this.canvasControl1.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.Form1_PreviewKeyDown);
             // 
             // Form1
             // 
@@ -169,13 +169,13 @@ namespace Snake
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private CanvasControl canvasControl1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button newGameButton;
         private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Label scoreLabel;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button highScoreButton;
+        private CanvasControl canvasControl1;
     }
 }
 

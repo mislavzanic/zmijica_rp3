@@ -85,6 +85,7 @@ namespace Snake
                 }
                 else if (item == 6)
                 {
+                    board.update(snek, tail);
                     board.update(snek, snek.Body.Last());
                     snek.Body.Remove(snek.Body.Last());
                     score++;
