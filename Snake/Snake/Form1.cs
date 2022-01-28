@@ -42,26 +42,33 @@ namespace Snake
         private void gameOver()
         {
             timer1.Stop();
-            MessageBox.Show("rekt");
+            if (game.Victory)
+            {
+                MessageBox.Show("not rekt");
+            }
+            else
+            {
+                MessageBox.Show("rekt");
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (keysPressed.Left)
+            if (keysPressed.Left && game.getSnakeDirection().Item1 == 0)
             {
-                game.handleInput(new Tuple<int,int>(-1,0));
+                game.handleInput(new Tuple<int, int>(-1, 0));
             }
-            else if (keysPressed.Right)
+            else if (keysPressed.Right && game.getSnakeDirection().Item1 == 0)
             {
-                game.handleInput(new Tuple<int,int>(1,0));
+                game.handleInput(new Tuple<int, int>(1, 0));
             }
-            else if (keysPressed.Up)
+            else if (keysPressed.Up && game.getSnakeDirection().Item2 == 0)
             {
-                game.handleInput(new Tuple<int,int>(0,-1));
+                game.handleInput(new Tuple<int, int>(0, -1));
             }
-            else if (keysPressed.Down)
+            else if (keysPressed.Down && game.getSnakeDirection().Item2 == 0)
             {
-                game.handleInput(new Tuple<int,int>(0,1));
+                game.handleInput(new Tuple<int, int>(0, 1));
             }
 
             if (keysPressed.Shift)

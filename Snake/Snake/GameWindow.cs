@@ -42,7 +42,14 @@ namespace Snake
         private void gameOver()
         {
             timer1.Stop();
-            MessageBox.Show("rekt");
+            if (game.Victory)
+            {
+                MessageBox.Show("not rekt");
+            }
+            else
+            {
+                MessageBox.Show("rekt");
+            }
         }
 
         private void tick(object sender, EventArgs e)

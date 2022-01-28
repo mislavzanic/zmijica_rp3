@@ -13,16 +13,19 @@ namespace Snake
         private Stack<Level> levelStack;
         private bool activeGame;
         private int score;
+        private bool victory;
 
         public int Score { get => (levelStack.Count > 0) ? score + levelStack.First().Score : score; }
         public bool ActiveGame { get => activeGame; }
-        
+        public bool Victory { get => victory; }
+
         public Game()
         {
             levelStack = new Stack<Level>();
             levelStack.Push(new Level("..\\..\\assets\\level2.txt", 15));
             //levelStack.Push(new Level("..\\..\\assets\\level1.txt", 10));
             activeGame = true;
+            victory = true;
             score = 0;
         }
 
@@ -44,6 +47,7 @@ namespace Snake
                 {
                     levelStack.Clear();
                     activeGame = false;
+                    victory = false;
                     return;
                 }
                 levelStack.Pop();
