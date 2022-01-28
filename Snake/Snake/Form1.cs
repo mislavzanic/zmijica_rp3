@@ -19,6 +19,11 @@ namespace Snake
         public Form1()
         {
             InitializeComponent();
+            this.SetStyle(
+               System.Windows.Forms.ControlStyles.UserPaint |
+               System.Windows.Forms.ControlStyles.AllPaintingInWmPaint |
+               System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer,
+               true);
             keysPressed = new KeysPressed();
             //KeyPreview = true;
             //startGame(); // ne
