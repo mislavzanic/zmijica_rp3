@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-
 
 namespace Snake
 {
@@ -14,8 +9,8 @@ namespace Snake
     
     internal class Level
     {
-        private readonly Snek snek;
         private readonly Board board;
+        private readonly Snek snake;
         private bool activeGame = true;
         private int score = 0;
         private readonly int scoreToPass;
@@ -28,8 +23,7 @@ namespace Snake
         public Level(string filepath, int scoreToPass)
         {
             this.scoreToPass = scoreToPass;
-            snek = new Snek(10,10);  
-            board = new Board(snek, filepath);
+            board = new Board(filepath, out snake);
             GenerateFood();
         }
 
@@ -45,63 +39,41 @@ namespace Snake
             }
             float rW = windowWidth / (float)board.Size;
             float rH = windowHeight / (float)board.Size;
-            snek.Render(myBuffer, rW, rH);
             board.Render(myBuffer, rW, rH);
         }
 
         public void Reactivate()
         {
             activeGame = true;
+            skipLevel = false;
         }
 
 
         public void Tick(int moveCount = 1, bool max = false)
         {
-            // snake not moving
-            if (snek.Direction.Item1 + snek.Direction.Item2 == 0) 
-                return;
+            if (snake.Direction.Item1 == 0 && snake.Direction.Item2 == 0) { return; }
 
             bool generateNew = false;
+            
             while (moveCount > 0 || max)
             {
-                // move snake
-                var tail = snek.Move(board.Size);
-                var itemAtNewHeadPosition = board.GetItem(snek.Head());
-
-                switch (itemAtNewHeadPosition){
+                switch (board.Update())
+                {
                     case ItemType.Food:
-                        snek.Body.Add(tail);
-                        board.Update(snek);
                         generateNew = true;
-
-                        if (++score == scoreToPass)
-                        {
-                            activeGame = false;
-                            return;
-                        }
+                        newPoint();
                         break;
                     case ItemType.Poison:
-                        board.Update(snek);
                         score--;
                         break;
                     case ItemType.Vegan:
-                        board.Update(snek, tail);
-                        board.Update(snek, snek.Body.Last());
-                        snek.Body.Remove(snek.Body.Last());
-                        score++;
-                        if (score == scoreToPass)
-                        {
-                            activeGame = false;
-                            return;
-                        }
+                        newPoint();
                         break;
                     case ItemType.Empty:
-                        board.Update(snek, tail);
                         break;
                     case ItemType.Teleport:
                         skipLevel = true;
                         activeGame = false;
-
                         return;
                     default:
                         activeGame = false;
@@ -113,9 +85,17 @@ namespace Snake
                 GenerateFood();
         }
 
+        private void newPoint()
+        {
+            if (++score == scoreToPass)
+            {
+                activeGame = false;
+            }
+        }
+
         public void UpdateSnakeDirection(Coord newDirection)
         {
-            snek.Direction = newDirection;
+            snake.Direction = newDirection;
         }
 
         private void GenerateFood()

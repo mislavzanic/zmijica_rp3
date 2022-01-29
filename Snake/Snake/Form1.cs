@@ -157,14 +157,14 @@ namespace Snake
             else if (e.KeyCode == settings.down)
             {
                 keysPressed.Down = false;
-            
             }
             */
         }
 
         private void Form1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if(e.KeyCode == (Keys)Properties.Settings.Default["up"] ||
+            if(
+                e.KeyCode == (Keys)Properties.Settings.Default["up"] ||
                 e.KeyCode == (Keys)Properties.Settings.Default["down"] ||
                 e.KeyCode == (Keys)Properties.Settings.Default["left"] ||
                 e.KeyCode == (Keys)Properties.Settings.Default["right"] ||

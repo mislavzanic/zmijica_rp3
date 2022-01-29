@@ -17,12 +17,17 @@ namespace Snake
         public Coord Direction
         {
             get => direction;
-            set => direction = value;
+            set {
+                if (direction.Item1 * value.Item1 == 0 && direction.Item2 * value.Item2 == 0)
+                {
+                    direction = value;
+                }
+            }
         }
 
-        public Snek(int startX, int startY)
+        public Snek(Coord startLocation)
         {
-            bodyCoords.Add(new Coord(startX, startY));
+            bodyCoords.Add(startLocation);
         }
 
         public Coord Head() => bodyCoords.First();
@@ -41,9 +46,8 @@ namespace Snake
             }
         }
 
-        public Coord Move(int boardSize)
+        public Coord Move(Coord newHead)
         {
-            Coord newHead = new Coord((boardSize + bodyCoords.First().Item1 + direction.Item1) % boardSize, (boardSize + bodyCoords.First().Item2 + direction.Item2) % boardSize);
             Coord tail = bodyCoords.Last();
             bodyCoords.Remove(tail);
             bodyCoords.Insert(0, newHead);
