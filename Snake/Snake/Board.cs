@@ -60,20 +60,22 @@ namespace Snake
         {
             // food
             SolidBrush brush = new SolidBrush((Color)Properties.Settings.Default["foodColor"]);
-            Util.FillRect(myBuffer.Graphics, brush, foodLocation, rW, rH, 0.2f);
+            Pen pen = new Pen((Color)Properties.Settings.Default["foodOutline"]);
+            Util.FillAndOutlineRect(myBuffer.Graphics, brush,  pen, foodLocation, rW, rH);
 
             // random item
             if (specialFoodLocation != null)
             {
                 brush.Color = specialFoodColors[specialFoodType];
-                Util.FillRect(myBuffer.Graphics, brush, specialFoodLocation, rW, rH, 0.2f);
+                Util.FillAndOutlineRect(myBuffer.Graphics, brush, pen, specialFoodLocation, rW, rH);
             }
 
             // walls
             brush.Color = (Color)Properties.Settings.Default["obstacleColor"];
-            foreach(var wallLocation in FindAllOfType(ItemType.Wall))
+            pen.Color = (Color)Properties.Settings.Default["obstacleOutline"];
+            foreach (var wallLocation in FindAllOfType(ItemType.Wall))
             {
-                Util.FillRect(myBuffer.Graphics, brush, wallLocation, rW, rH, 0.1f);
+                Util.FillAndOutlineRect(myBuffer.Graphics, brush, pen, wallLocation, rW, rH);
             }
             snake.Render(myBuffer, rW, rH);
         }

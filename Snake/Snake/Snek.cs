@@ -35,14 +35,15 @@ namespace Snake
         public void ShrinkTail() => bodyCoords.Remove(bodyCoords.Last());
         public void Render(BufferedGraphics myBuffer, float rW, float rH)
         {
+            var pen = new Pen((Color)Properties.Settings.Default["snakeOutline"]);
             var brush = new SolidBrush((Color)Properties.Settings.Default["headColor"]);
 
-            Util.FillRect(myBuffer.Graphics, brush, bodyCoords[0], rW, rH, 0.2f);
+            Util.FillAndOutlineRect(myBuffer.Graphics, brush, pen, bodyCoords[0], rW, rH);
 
             brush.Color = (Color)Properties.Settings.Default["snekColor"];
             foreach(var bodyCoord in bodyCoords.Skip(1))
             {
-                Util.FillRect(myBuffer.Graphics, brush, bodyCoord, rW, rH, 0.2f);
+                Util.FillAndOutlineRect(myBuffer.Graphics, brush, pen, bodyCoord, rW, rH);
             }
         }
 

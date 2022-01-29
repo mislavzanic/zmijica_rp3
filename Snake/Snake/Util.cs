@@ -40,7 +40,7 @@ namespace Snake
             coordinates coords,
             float rW, 
             float rH,
-            float relativeMargin
+            float relativeMargin = .1f
         )
         {
             graphics.FillRectangle(
@@ -52,7 +52,7 @@ namespace Snake
                 );
         }
 
-        public static void FillandoutlineRect(Graphics graphics, Brush brush, Pen pen, coordinates coords, float rW, float rH, float relativeMargin)
+        public static void FillAndOutlineRect(Graphics graphics, Brush brush, Pen pen, coordinates coords, float rW, float rH, float relativeMargin=.1f)
         {
             FillRect(graphics, brush, coords, rW, rH, relativeMargin);
 
