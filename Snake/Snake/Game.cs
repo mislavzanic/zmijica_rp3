@@ -42,7 +42,7 @@ namespace Snake
             score += currentLevel.Score;
 
             
-            if (currentLevel.Score < currentLevel.ScoreToPass && !currentLevel.SkipLevel)
+            if (currentLevel.Defeat)
             {
                 levelStack.Clear();
                 activeGame = false;

@@ -12,14 +12,14 @@ namespace Snake
         private readonly Board board;
         private readonly Snek snake;
         private bool activeGame = true;
+        private bool defeat = false;
         private int score = 0;
         private readonly int scoreToPass;
-        private bool skipLevel = false;
 
         public int Score { get => score; }
         public int ScoreToPass { get => scoreToPass; }
         public bool ActiveGame { get => activeGame; }
-        public bool SkipLevel { get => skipLevel; }
+        public bool Defeat { get => defeat; }
         public Level(string filepath, int scoreToPass)
         {
             this.scoreToPass = scoreToPass;
@@ -45,7 +45,6 @@ namespace Snake
         public void Reactivate()
         {
             activeGame = true;
-            skipLevel = false;
         }
 
 
@@ -72,11 +71,11 @@ namespace Snake
                     case ItemType.Empty:
                         break;
                     case ItemType.Teleport:
-                        skipLevel = true;
                         activeGame = false;
                         return;
                     default:
                         activeGame = false;
+                        defeat = true;
                         return;
                 }
                 moveCount--;
