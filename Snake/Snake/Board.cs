@@ -20,7 +20,7 @@ namespace Snake
 
     internal class Board
     {
-        public readonly List<List<ItemType>> board;
+        private readonly List<List<ItemType>> board;
         private readonly Snek snake;
 
         private readonly int _Size;
