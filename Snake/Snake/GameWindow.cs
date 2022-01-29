@@ -172,5 +172,13 @@ namespace Snake
             Form2 settingsForm = new Form2();
             settingsForm.ShowDialog();
         }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            using (Font myFont = new Font("Arial", 14))
+            {
+                e.Graphics.DrawString("Poison", myFont, Brushes.Black, new Point(2, 2));
+            }
+        }
     }
 }

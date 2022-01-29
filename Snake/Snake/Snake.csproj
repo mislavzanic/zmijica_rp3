@@ -116,6 +116,7 @@
   <ItemGroup>
     <Content Include="assets\level1.txt" />
     <Content Include="assets\level2.txt" />
+    <Content Include="assets\level3.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
