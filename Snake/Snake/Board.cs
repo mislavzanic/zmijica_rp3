@@ -9,141 +9,151 @@ using System.Windows.Forms;
 namespace Snake
 {
     using Coord = Tuple<int, int>;
+    enum ItemType
+    {
+        Empty,
+        Food,
+        Snake,
+        Wall,
+        Teleport,
+        Poison,
+        Vegan
+    } 
+
     internal class Board
     {
-        private int[,] board;
-        private List<Coord> walls;
-        private Coord food;
-        private Tuple<Coord, int> randItem;
-        private List<string> items;
-        private int boardSize;
+        private readonly List<List<ItemType>> board;
+        
+        private readonly int _Size;
+        public int Size { get => _Size; }
+        ItemType[] SpecialFoods = new ItemType[] {
+            ItemType.Teleport,
+            ItemType.Poison,
+            ItemType.Vegan
+        };
 
-        public List<Coord> Walls { get => walls; }
-        public int BoardSize { get => boardSize; }
+
+        private readonly List<Coord> wallsLocations = new List<Coord>();
+        public List<Coord> Walls { get => wallsLocations; }
+
+        private Coord foodLocation;
+        private Coord specialFoodLocation;
+
+        private ItemType specialFoodType;
+        private readonly Dictionary<ItemType, Color> specialFoodColors = new Dictionary<ItemType, Color>()
+        {
+            { ItemType.Teleport, (Color)Properties.Settings.Default["skipColor"] },
+            { ItemType.Poison, (Color)Properties.Settings.Default["poisonColor"]},
+            { ItemType.Vegan, (Color)Properties.Settings.Default["shrinkColor"]}
+        };
+        
         public Board(Snek snek, string filepath)
         {
-            board = Util.loadMatrix(filepath);
-            boardSize = board.GetLength(0);
-            walls = new List<Coord>();
-            makeWalls();
-            items = new List<string>();
-            items.Add("skipColor");
-            items.Add("poisonColor");
-            items.Add("shrinkColor");
+            board = Util.LoadMatrix(filepath);
+            _Size = board.Count;
+            MakeWalls();
             
             foreach (var element in snek.Body)
             {
-                board[element.Item1, element.Item2] = 1;
+                board[element.Item1][element.Item2] = ItemType.Snake;
             }
         }
 
-        public void render(BufferedGraphics myBuffer, float rW, float rH)
+        public void Render(BufferedGraphics myBuffer, float rW, float rH)
         {
+            // food
             SolidBrush brush = new SolidBrush((Color)Properties.Settings.Default["foodColor"]);
-            Util.FillRect(myBuffer.Graphics, brush, food, rW, rH, 0.2f);
+            Util.FillRect(myBuffer.Graphics, brush, foodLocation, rW, rH, 0.2f);
 
-            if (randItem != null)
+            // random item
+            if (specialFoodLocation != null)
             {
-                brush.Color = (Color)Properties.Settings.Default[items[randItem.Item2]];
-                Util.FillRect(myBuffer.Graphics, brush, randItem.Item1, rW, rH, 0.2f);
+                brush.Color = specialFoodColors[specialFoodType];
+                Util.FillRect(myBuffer.Graphics, brush, specialFoodLocation, rW, rH, 0.2f);
             }
 
+            // walls
             brush.Color = (Color)Properties.Settings.Default["obstacleColor"];
-            for (int i = 0; i < walls.Count; i++)
+            for (int i = 0; i < wallsLocations.Count; i++)
             {
-                Util.FillRect(myBuffer.Graphics, brush, walls[i], rW, rH, 0.2f);
+                Util.FillRect(myBuffer.Graphics, brush, wallsLocations[i], rW, rH, 0.1f);
             }
         }
 
-        private Coord calcCoords(Coord coord)
+        private Coord InBounds(Coord coord)
         {
-            return new Coord((boardSize + coord.Item1) % boardSize, (boardSize + coord.Item2) % boardSize);
+            return new Coord((_Size + coord.Item1) % _Size, (_Size + coord.Item2) % _Size);
         }
 
-        public void update(Snek snek)
+        public void Update(Snek snek, Coord tail = null)
         {
-            var newCoords = calcCoords(snek.Body.First());
-            if (board[newCoords.Item1, newCoords.Item2] >= 4) randItem = null;
-            board[newCoords.Item1, newCoords.Item2] = 1;
-        }
+            var headXY = InBounds(snek.Body.First());
 
-        public void update(Snek snek, Coord tail)
-        {
-            update(snek);
-            var newCoords = calcCoords(tail);
-            board[newCoords.Item1, newCoords.Item2] = 0;
-        }
+            if (board[headXY.Item1][headXY.Item2].In(SpecialFoods)) {
+                specialFoodLocation = null;
+            } 
+            
+            // move head forward
+            board[headXY.Item1][headXY.Item2] = ItemType.Snake;
 
-        public int getItem(Coord coord)
-        {
-            var newCoords = calcCoords(coord);
-            return board[newCoords.Item1,newCoords.Item2];
-        }
-
-        public void generateFood(int location)
-        {
-            int k = 0;
-            for (int i = 0; i < boardSize * boardSize; i++)
+            // remove tail
+            if (tail != null)
             {
-                Coord coords = new Coord(i / boardSize, i % boardSize);
-                if (board[coords.Item1, coords.Item2] == 0)
-                {
-                    if (k == location)
-                    {
-                        board[coords.Item1, coords.Item2] = 2;
-                        food = new Coord(coords.Item1, coords.Item2);
-                        return;
-                    }
-                    else
-                    {
-                        k++;
-                    }
-                }
-            }
-            throw new Exception();
-        }
-
-        public void generateFood(int location, int location2, int item)
-        {
-            var seen = new List<int>();
-            int k = 0;
-            for (int i = 0; i < boardSize * boardSize; i++)
-            {
-                Coord coords = new Coord(i / boardSize, i % boardSize);
-                if (board[coords.Item1, coords.Item2] == 0)
-                {
-                    if (k == location)
-                    {
-                        board[coords.Item1, coords.Item2] = 2;
-                        food = new Coord(coords.Item1, coords.Item2);
-                        seen.Add(k);
-                        if (seen.Count == 2) return;
-                        k++;
-                    }
-                    else if (k == location2)
-                    {
-                        board[coords.Item1, coords.Item2] = 4 + item;
-                        randItem = new Tuple<Coord, int>(new Coord(coords.Item1, coords.Item2), item);
-                        seen.Add(k);
-                        if (seen.Count == 2) return;
-                        k++;
-                    }
-                    else
-                    {
-                        k++;
-                    }
-                }
+                var tailXY = InBounds(tail);
+                board[tailXY.Item1][tailXY.Item2] = ItemType.Empty;
             }
         }
 
-
-        private void makeWalls()
+        public ItemType GetItem(Coord coord)
         {
-            for (int i = 0; i < boardSize; ++i)
+            var newCoords = InBounds(coord);
+            return board[newCoords.Item1][newCoords.Item2];
+        }
+
+        private List<Coord> EmptySpaces()
+        {
+            var indices = new List<Coord>();
+
+            for( int i = 0; i < _Size; i++)
             {
-                for (int j = 0; j < boardSize; ++j)
+                var row = this.board[i];
+                indices.AddRange(
+                    Enumerable.Range(0, row.Count)
+                              .Where(j => row[j] == ItemType.Empty)
+                              .Select(j => new Coord(i, j))
+                );
+            }
+
+            return indices;
+        }
+        public void GenerateFood(bool addSpecialFood)
+        {
+            var randomNumberGenerator = new Random();
+            var emptySpaces = EmptySpaces();
+
+            if (emptySpaces.Count <=0) { return; }
+
+            foodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];
+            emptySpaces.Remove(foodLocation);
+            board[foodLocation.Item1][foodLocation.Item2] = ItemType.Food;
+
+            if (emptySpaces.Count == 1 || !addSpecialFood) { return; }
+
+            specialFoodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];
+            specialFoodType = (ItemType) randomNumberGenerator.Next(
+                (int) ItemType.Teleport,
+                Enum.GetValues(typeof(ItemType)).Cast<int>().Max() + 1
+                );
+            board[specialFoodLocation.Item1][specialFoodLocation.Item2] = specialFoodType;
+        }
+
+        private void MakeWalls()
+        {
+            for (int i = 0; i < _Size; ++i)
+            {
+                for (int j = 0; j < _Size; ++j)
                 {
-                    if (board[i, j] == 3) walls.Add(new Coord(i, j));
+                    if (board[i][j] == ItemType.Wall) wallsLocations.Add(new Coord(i, j));
                 }
             }
         }

@@ -121,7 +121,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Shift+None")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ShiftKey")]
         public global::System.Windows.Forms.Keys shift {
             get {
                 return ((global::System.Windows.Forms.Keys)(this["shift"]));

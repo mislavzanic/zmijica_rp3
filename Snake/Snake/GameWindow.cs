@@ -15,6 +15,7 @@ namespace Snake
 
         KeysPressed keysPressed;
         Game game;
+        bool shift = false;
 
         public GameWindow()
         {
@@ -47,26 +48,9 @@ namespace Snake
 
         private void tick(object sender, EventArgs e)
         {
-            if (keysPressed.Left)
-            {
-                game.handleInput(new Tuple<int,int>(-1,0));
-            }
-            else if (keysPressed.Right)
-            {
-                game.handleInput(new Tuple<int,int>(1,0));
-            }
-            else if (keysPressed.Up)
-            {
-                game.handleInput(new Tuple<int,int>(0,-1));
-            }
-            else if (keysPressed.Down)
-            {
-                game.handleInput(new Tuple<int,int>(0,1));
-            }
-
             if (keysPressed.Shift)
             {
-                //nesto
+                shift = true;
             }
             else if (keysPressed.Ctrl)
             {
@@ -74,9 +58,35 @@ namespace Snake
             }
             else
             {
-                game.tick(keysPressed.Num);
+                if (keysPressed.Left)
+                {
+                    game.handleInput(new Tuple<int, int>(-1, 0));
+                }
+                else if (keysPressed.Right)
+                {
+                    game.handleInput(new Tuple<int, int>(1, 0));
+                }
+                else if (keysPressed.Up)
+                {
+                    game.handleInput(new Tuple<int, int>(0, -1));
+                }
+                else if (keysPressed.Down)
+                {
+                    game.handleInput(new Tuple<int, int>(0, 1));
+                }
+
+                if (shift)
+                {
+                    game.tick(keysPressed.Num);
+                }
+                else
+                {
+                    game.tick(keysPressed.Num);
+                }
+                shift = false;
+                
             }
-            
+
             scoreLabel.Text = "Score: " + game.Score.ToString();
             keysPressed.reset();
             if (!game.ActiveGame)
@@ -157,11 +167,6 @@ namespace Snake
 
             Form2 settingsForm = new Form2();
             settingsForm.ShowDialog();
-        }
-
-        private void KeyPressed(object sender, KeyPressEventArgs e)
-        {
-            MessageBox.Show("Tusam");
         }
     }
 }

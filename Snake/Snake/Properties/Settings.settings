@@ -27,7 +27,7 @@
       <Value Profile="(Default)">Down</Value>
     </Setting>
     <Setting Name="shift" Type="System.Windows.Forms.Keys" Scope="User">
-      <Value Profile="(Default)">Shift+None</Value>
+      <Value Profile="(Default)">ShiftKey</Value>
     </Setting>
     <Setting Name="ctrl" Type="System.Windows.Forms.Keys" Scope="User">
       <Value Profile="(Default)">Ctrl+None</Value>

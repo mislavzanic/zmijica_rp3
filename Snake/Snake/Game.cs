@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Snake
 {
@@ -21,37 +22,46 @@ namespace Snake
         {
             levelStack = new Stack<Level>();
             levelStack.Push(new Level("..\\..\\assets\\level2.txt", 15));
-            //levelStack.Push(new Level("..\\..\\assets\\level1.txt", 10));
+            levelStack.Push(new Level("..\\..\\assets\\level1.txt", 10));
             activeGame = true;
             score = 0;
         }
 
         public void render(BufferedGraphics myBuffer, int windowWidth, int windowHeight)
         {
-            levelStack.First().render(myBuffer, windowWidth, windowHeight);
+            levelStack.First().Render(myBuffer, windowWidth, windowHeight);
         }
 
-        public void tick(int moveCount = 1)
+        public void tick(int moveCount = 1, bool max = false)
         {
-            levelStack.First().tick(moveCount);
-            if (!levelStack.First().ActiveGame)
+            var currentLevel = levelStack.First();
+            currentLevel.Tick(moveCount, max);
+
+            if (currentLevel.ActiveGame) {return;}
+
+            score += currentLevel.Score;
+
+            
+            if (currentLevel.Score < currentLevel.ScoreToPass && !currentLevel.SkipLevel)
             {
-                score += levelStack.First().Score;
-                if (levelStack.First().Score < levelStack.First().ScoreToPass && !levelStack.First().SkipLevel)
-                {
-                    levelStack.Clear();
-                    activeGame = false;
-                    return;
-                }
-                levelStack.Pop();
-                activeGame = levelStack.Count > 0;
+                levelStack.Clear();
+                activeGame = false;
                 return;
             }
+            
+            if (levelStack.Count > 1) { 
+                levelStack.Pop(); 
+            }
+            else
+            {
+                currentLevel.Reactivate();
+            }
+                
         }
 
         public void handleInput(Coord newDirection)
         {
-            levelStack.First().newSnakeDirection(newDirection);
+            levelStack.First().UpdateSnakeDirection(newDirection);
         }
     }
 }

@@ -10,15 +10,16 @@ namespace Snake
 {
 
     using Coord = Tuple<int, int>;
+
+    
     internal class Level
     {
-        private Snek snek;
-        private Board board;
-        private Random random;
-        private bool activeGame;
-        private int score;
-        private int scoreToPass;
-        private bool skipLevel;
+        private readonly Snek snek;
+        private readonly Board board;
+        private bool activeGame = true;
+        private int score = 0;
+        private readonly int scoreToPass;
+        private bool skipLevel = false;
 
         public int Score { get => score; }
         public int ScoreToPass { get => scoreToPass; }
@@ -29,14 +30,10 @@ namespace Snake
             this.scoreToPass = scoreToPass;
             snek = new Snek(10,10);  
             board = new Board(snek, filepath);
-            random = new Random();
-            generateFood();
-            activeGame = true;
-            skipLevel = false;
-            score = 0;
+            GenerateFood();
         }
 
-        public void render(BufferedGraphics myBuffer, int windowWidth, int windowHeight)
+        public void Render(BufferedGraphics myBuffer, int windowWidth, int windowHeight)
         {
             myBuffer.Graphics.Clear((Color)Properties.Settings.Default["bgColor"]);
             myBuffer.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -46,91 +43,84 @@ namespace Snake
                 myBuffer.Dispose();
                 return;
             }
-            float rW = windowWidth / (float)board.BoardSize;
-            float rH = windowHeight / (float)board.BoardSize;
-            snek.render(myBuffer, rW, rH);
-            board.render(myBuffer, rW, rH);
+            float rW = windowWidth / (float)board.Size;
+            float rH = windowHeight / (float)board.Size;
+            snek.Render(myBuffer, rW, rH);
+            board.Render(myBuffer, rW, rH);
         }
 
-        public void tick(int moveCount = 1)
+        public void Reactivate()
         {
-            if (snek.Direction.Item1 + snek.Direction.Item2 == 0) return;
+            activeGame = true;
+        }
+
+
+        public void Tick(int moveCount = 1, bool max = false)
+        {
+            // snake not moving
+            if (snek.Direction.Item1 + snek.Direction.Item2 == 0) 
+                return;
+
             bool generateNew = false;
-            while (moveCount > 0)
+            while (moveCount > 0 || max)
             {
-                Coord tail = snek.move(board.BoardSize);
-                int item = board.getItem(snek.Body.First());
-                if (item == 1 || item == 3 || item == 4)
-                {
-                    skipLevel = item == 4;
-                    activeGame = false;
-                    return;
-                }
-                else if (item == 2)
-                {
-                    snek.Body.Add(tail);
-                    board.update(snek);
-                    generateNew = true;
-                    score++;
-                    if (score == scoreToPass)
-                    {
+                // move snake
+                var tail = snek.Move(board.Size);
+                var itemAtNewHeadPosition = board.GetItem(snek.Head());
+
+                switch (itemAtNewHeadPosition){
+                    case ItemType.Food:
+                        snek.Body.Add(tail);
+                        board.Update(snek);
+                        generateNew = true;
+
+                        if (++score == scoreToPass)
+                        {
+                            activeGame = false;
+                            return;
+                        }
+                        break;
+                    case ItemType.Poison:
+                        board.Update(snek);
+                        score--;
+                        break;
+                    case ItemType.Vegan:
+                        board.Update(snek, tail);
+                        board.Update(snek, snek.Body.Last());
+                        snek.Body.Remove(snek.Body.Last());
+                        score++;
+                        if (score == scoreToPass)
+                        {
+                            activeGame = false;
+                            return;
+                        }
+                        break;
+                    case ItemType.Empty:
+                        board.Update(snek, tail);
+                        break;
+                    case ItemType.Teleport:
+                        skipLevel = true;
+                        activeGame = false;
+
+                        return;
+                    default:
                         activeGame = false;
                         return;
-                    }
-                }
-                else if (item == 5)
-                {
-                    board.update(snek);
-                    score--;
-                }
-                else if (item == 6)
-                {
-                    board.update(snek, tail);
-                    board.update(snek, snek.Body.Last());
-                    snek.Body.Remove(snek.Body.Last());
-                    score++;
-                    if (score == scoreToPass)
-                    {
-                        activeGame = false;
-                        return;
-                    }
-                }
-                else
-                {
-                    board.update(snek,tail);
                 }
                 moveCount--;
             }
-            if (generateNew) generateFood();
+            if (generateNew) 
+                GenerateFood();
         }
 
-        public void newSnakeDirection(Coord newDirection)
+        public void UpdateSnakeDirection(Coord newDirection)
         {
             snek.Direction = newDirection;
         }
 
-        private void generateFood()
+        private void GenerateFood()
         {
-            int itemnum = board.BoardSize * board.BoardSize - snek.Body.Count - board.Walls.Count;
-            if(itemnum <= 0)
-                return;
-            if (itemnum > 1 && score > 0 && score % 3 == 0)
-            {
-                var pos = random.Next(itemnum);
-                var pos2 = 0;
-                if (itemnum - pos > pos)
-                {
-                    pos2 = random.Next(itemnum - pos) + pos;
-                }
-                else
-                {
-                    pos2 = random.Next(pos);
-                }
-                if (pos2 == pos) pos2 = pos + 1;
-                board.generateFood(pos, pos2, random.Next(3));
-                return;
-            }
-            board.generateFood(random.Next(itemnum));
+            board.GenerateFood(score > 0 && score % 3 == 0);
         }
     }
 }

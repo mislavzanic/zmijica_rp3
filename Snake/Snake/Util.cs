@@ -10,7 +10,7 @@ namespace Snake
 {
     using coordinates = Tuple<int, int>;
 
-    public static class Util
+    internal static class Util
     {
         public static T[,] ToRectangularArray<T>(this IReadOnlyList<T[]> arrays)
         {
@@ -20,12 +20,18 @@ namespace Snake
                     ret[i, j] = arrays[i][j];
             return ret;
         }
-        public static int[,] loadMatrix(String filepath)
+        public static List<List<ItemType>> LoadMatrix(string filepath) =>
+            File.ReadAllLines(filepath)   // read from File
+                     .Select(x => x.Split(' ')
+                                   .Select(int.Parse)
+                                   .Select(xx => (ItemType)xx)
+                                   .ToList()
+                      ) // split line into array of ItemType
+                     .ToList();
+
+        public static bool In<T>(this T item, params T[] list)
         {
-            return File.ReadAllLines(filepath)   // read from File
-                     .Select(x => x.Split(' ').Select(int.Parse).ToArray()) // split line into array of int
-                     .ToArray()
-                     .ToRectangularArray();
+            return list.Contains(item);
         }
 
         public static void FillRect(
