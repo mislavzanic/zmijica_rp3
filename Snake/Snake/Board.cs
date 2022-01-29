@@ -20,7 +20,7 @@ namespace Snake
 
     internal class Board
     {
-        private readonly List<List<ItemType>> board;
+        public readonly List<List<ItemType>> board;
         private readonly Snek snake;
 
         private readonly int _Size;
@@ -78,21 +78,70 @@ namespace Snake
             snake.Render(myBuffer, rW, rH);
         }
 
-        private Coord InBounds(Coord coord) => new Coord((_Size + coord.Item1) % _Size, (_Size + coord.Item2) % _Size);
+        private Coord InBounds(Coord coord) => new Coord(InBounds(coord.Item1), InBounds(coord.Item2));
+        private int InBounds(int x) => (_Size + x) % _Size;
+
+        // returns -1 if infinite
+        public int MaxSteps(Coord direction)
+        {
+            var head = snake.Head();
+           
+            if (direction.Item1 != 0)
+            {
+                return MaxStepsY(head, direction.Item1);
+            }
+            else if (direction.Item2 != 0)
+            {
+                return MaxStepsX(head, direction.Item2);
+            }
+            throw new ApplicationException("Received (0, 0) direction");
+        }
+
+        private int MaxStepsX(Coord start, int direction)
+        {
+            var row = board[start.Item1];
+
+            for (var i = 1; i < row.Count; i++)
+            {
+                if (row[InBounds(start.Item2 + i * direction)].In(ItemType.Wall, ItemType.Snake))
+                {
+                    return i-1;
+                }
+            }
+
+            return -1;
+        }
+
+        private int MaxStepsY(Coord start, int direction)
+        {
+            for (var i = 1; i < board.Count; i++)
+            {
+                if (board[InBounds(start.Item1 + i * direction)][start.Item2].In(ItemType.Wall, ItemType.Snake))
+                {
+                    return i-1;
+                }
+            }
+
+            return -1;
+        }
 
         public ItemType Update()
         {
-            var newHeadXY = InBounds(new Coord(snake.Head().Item1 + snake.Direction.Item1, snake.Head().Item2 + snake.Direction.Item2));
-            var itemAtNewHeadXY = board[newHeadXY.Item1][newHeadXY.Item2];
+            var oldTailXY = snake.Tail();
+            var headXY = snake.Head();
+            var newHeadXY = InBounds(new Coord(headXY.Item1 + snake.Direction.Item1, headXY.Item2 + snake.Direction.Item2));
+            snake.Move(newHeadXY);
+            headXY = newHeadXY;
+
+            var itemAtHeadXY = board[headXY.Item1][headXY.Item2];
             
-            if (itemAtNewHeadXY.In(SpecialFoods)) {
+            if (itemAtHeadXY.In(SpecialFoods)) {
                 specialFoodLocation = null;
             }
 
-            board[newHeadXY.Item1][newHeadXY.Item2] = ItemType.Snake;
-            var oldTailXY = snake.Move(newHeadXY);
+            board[headXY.Item1][headXY.Item2] = ItemType.Snake;
 
-            if (itemAtNewHeadXY == ItemType.Food)
+            if (itemAtHeadXY == ItemType.Food)
             {
                 snake.Body.Add(oldTailXY);
             }
@@ -101,13 +150,14 @@ namespace Snake
                 board[oldTailXY.Item1][oldTailXY.Item2] = ItemType.Empty;
             }
 
-            if (itemAtNewHeadXY == ItemType.Vegan)
+            if (itemAtHeadXY == ItemType.Vegan)
             {
-                board[snake.Tail().Item1][snake.Tail().Item2] = ItemType.Empty;
-                snake.Body.Remove(snake.Tail());
+                var tailXY = snake.Tail();
+                board[tailXY.Item1][tailXY.Item2] = ItemType.Empty;
+                snake.Body.Remove(tailXY);
             }
 
-            return itemAtNewHeadXY;
+            return itemAtHeadXY;
         }
 
         private List<Coord> FindAllOfType(ItemType itemtype)

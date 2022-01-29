@@ -79,7 +79,7 @@ namespace Snake
            
                 if (shift)
                 {
-                    game.tick(keysPressed.Num);
+                    game.tick(0, true);
                 }
                 else
                 {

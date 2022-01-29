@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Snake
 {
 
     using Coord = Tuple<int, int>;
 
-    
+
     internal class Level
     {
         private readonly Board board;
@@ -54,8 +55,14 @@ namespace Snake
             if (snake.Direction.Item1 == 0 && snake.Direction.Item2 == 0) { return; }
 
             bool generateNew = false;
-            
-            while (moveCount > 0 || max)
+
+            if (max)
+            {
+                var maxSteps = board.MaxSteps(snake.Direction);
+                moveCount = (max && maxSteps != -1) ? maxSteps: moveCount;
+            }
+
+            for (var i = 0; i < moveCount; i++)
             {
                 switch (board.Update())
                 {
@@ -79,9 +86,9 @@ namespace Snake
                         defeat = true;
                         return;
                 }
-                moveCount--;
             }
-            if (generateNew) 
+
+            if (generateNew)
                 GenerateFood();
         }
 
