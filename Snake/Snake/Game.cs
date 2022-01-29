@@ -41,7 +41,6 @@ namespace Snake
             if (currentLevel.ActiveGame) {return;}
 
             score += currentLevel.Score;
-
             
             if (currentLevel.Defeat)
             {
@@ -49,7 +48,7 @@ namespace Snake
                 activeGame = false;
                 return;
             }
-            
+
             if (levelStack.Count > 1) { 
                 levelStack.Pop(); 
             }
@@ -57,7 +56,6 @@ namespace Snake
             {
                 currentLevel.Reactivate();
             }
-                
         }
 
         public void handleInput(Coord newDirection)
