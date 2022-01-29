@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace Snake
 {
@@ -17,6 +16,7 @@ namespace Snake
 
         public int Score { get => (levelStack.Count > 0) ? score + levelStack.First().Score : score; }
         public bool ActiveGame { get => activeGame; }
+        public Coord SnakeDirection { get => levelStack.First().SnakeDirection; }
         
         public Game()
         {

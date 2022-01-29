@@ -20,6 +20,7 @@ namespace Snake
         public int ScoreToPass { get => scoreToPass; }
         public bool ActiveGame { get => activeGame; }
         public bool Defeat { get => defeat; }
+        public Coord SnakeDirection { get => snake.Direction; }
         public Level(string filepath, int scoreToPass)
         {
             this.scoreToPass = scoreToPass;

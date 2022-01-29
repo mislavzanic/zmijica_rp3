@@ -58,23 +58,25 @@ namespace Snake
             }
             else
             {
-                if (keysPressed.Left)
+                if (keysPressed.Left && game.SnakeDirection.Item1 == 0)
                 {
-                    game.handleInput(new Tuple<int, int>(-1, 0));
+                    game.handleInput(new Tuple<int,int>(-1,0));
                 }
-                else if (keysPressed.Right)
+                else if (keysPressed.Right && game.SnakeDirection.Item1 == 0)
                 {
-                    game.handleInput(new Tuple<int, int>(1, 0));
+                    game.handleInput(new Tuple<int,int>(1,0));
                 }
-                else if (keysPressed.Up)
+                else if (keysPressed.Up && game.SnakeDirection.Item2 == 0)
                 {
-                    game.handleInput(new Tuple<int, int>(0, -1));
+                    game.handleInput(new Tuple<int,int>(0,-1));
                 }
-                else if (keysPressed.Down)
+                else if (keysPressed.Down && game.SnakeDirection.Item2 == 0)
                 {
-                    game.handleInput(new Tuple<int, int>(0, 1));
+                    game.handleInput(new Tuple<int,int>(0,1));
                 }
 
+            
+           
                 if (shift)
                 {
                     game.tick(keysPressed.Num);
@@ -86,6 +88,8 @@ namespace Snake
                 shift = false;
                 
             }
+
+            
 
             scoreLabel.Text = "Score: " + game.Score.ToString();
             keysPressed.reset();
