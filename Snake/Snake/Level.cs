@@ -54,19 +54,6 @@ namespace Snake
 
         public void Tick(int moveCount = 1, bool max = false)
         {
-            //string boardrepr = "";
-            //foreach(var row in board.board) // remove public
-            //{
-            //    foreach(var cell in row)
-            //    {
-            //        boardrepr += (int) cell;
-            //    }
-            //    boardrepr += "\n";
-            //}
-            //
-            //MessageBox.Show(boardrepr);
-            //
-            //while (true) { }
             if (snake.Direction.Item1 == 0 && snake.Direction.Item2 == 0) { return; }
 
             bool generateNew = false;

@@ -24,25 +24,21 @@ namespace Snake
         private readonly List<List<ItemType>> board;
         private readonly Snek snake;
         private readonly List<Snek> otherSnakes = new List<Snek>();
-        private readonly List<Coord> possibleDirections = new List<Coord>()
+        private readonly Coord[] possibleDirections = new Coord[]
             {
                 new Coord(-1, 0),
                 new Coord(1, 0),
-                new Coord(0, 1),
-                new Coord(0, -1)
+                new Coord(0, -1),
+                new Coord(0, 1)
             };
 
-        private readonly int _Size;
-        public int Size { get => _Size; }
-        private ItemType[] SpecialFoods = new ItemType[] {
+        public int Size { get => board.Count; }
+        
+        private readonly HashSet<ItemType> SpecialFoods = new HashSet<ItemType> {
             ItemType.Teleport,
             ItemType.Poison,
             ItemType.Vegan
         };
-
-
-        private Coord foodLocation;
-        private Coord specialFoodLocation;
 
         private ItemType specialFoodType;
         private readonly Dictionary<ItemType, Color> specialFoodColors = new Dictionary<ItemType, Color>()
@@ -57,7 +53,6 @@ namespace Snake
         public Board(string filepath, out Snek snake, out List<Snek> otherSnakes, uint othersCnt = 0)
         {
             board = Util.LoadMatrix(filepath);
-            _Size = board.Count;
 
             var emptySpaces = FindAllOfType(ItemType.Empty);
 
@@ -86,9 +81,11 @@ namespace Snake
             // food
             SolidBrush brush = new SolidBrush((Color)Properties.Settings.Default["foodColor"]);
             Pen pen = new Pen((Color)Properties.Settings.Default["foodOutline"]);
+            var foodLocation = FindFirstOfType(ItemType.Food);
             Util.FillAndOutlineRect(myBuffer.Graphics, brush,  pen, foodLocation, rW, rH);
 
-            // random item
+            // special food
+            var specialFoodLocation = MaybeFindFirstOfTypes(SpecialFoods);
             if (specialFoodLocation != null)
             {
                 brush.Color = specialFoodColors[specialFoodType];
@@ -111,7 +108,7 @@ namespace Snake
         }
 
         private Coord InBounds(Coord coord) => new Coord(InBounds(coord.Item1), InBounds(coord.Item2));
-        private int InBounds(int x) => (_Size + x) % _Size;
+        private int InBounds(int x) => (Size + x) % Size;
 
         // returns -1 if infinite
         public int MaxSteps(Coord direction)
@@ -194,10 +191,7 @@ namespace Snake
                 otherSnake.Direction = direction;
                 var itemSnakeAte = updateSnake(otherSnake);
 
-                if (itemSnakeAte == ItemType.Food)
-                {
-                    GenerateFood(false);
-                }
+                if (itemSnakeAte == ItemType.Food){ GenerateFood(false); }
                 return true;
             }
             return false;
@@ -234,13 +228,7 @@ namespace Snake
         }
 
         private void processItemSnakeAte(ItemType item, Snek snakeToUpdate, Coord oldTail)
-        {
-            if (item.In(SpecialFoods))
-            {
-                specialFoodLocation = null;
-            }
-
-
+        { 
             if (item == ItemType.Food)
             {
                 snakeToUpdate.Body.Add(oldTail);
@@ -264,7 +252,7 @@ namespace Snake
         {
             var indices = new List<Coord>();
 
-            return Enumerable.Range(0, _Size)
+            return Enumerable.Range(0, Size)
                              .Select(
                                i => Enumerable.Range(0, board[i].Count)
                                               .Where(j => board[i][j] == itemtype)
@@ -272,19 +260,51 @@ namespace Snake
                                               .ToList()
                               ).SelectMany(x => x).ToList();
         }
+
+        private Coord MaybeFindFirst(object query, Comparator comparator)
+        {
+            for (var row = 0; row < board.Count; row++)
+            {
+                for (var col = 0; col < board.Count; col++)
+                {
+                    if (comparator(query, board[row][col]))
+                    {
+                        return new Coord(row, col);
+                    }
+                }
+            }
+            return null;
+        }
+        private Coord FindFirstOfType(ItemType type_)
+        {
+            var result = MaybeFindFirst(type_, new Comparator((container, query) => (ItemType)container == query));
+
+            if (result == null)
+            {
+                throw new ApplicationException($"Could not find {type_}");
+            }
+
+            return result;
+        }
+
+        private Coord MaybeFindFirstOfTypes(HashSet<ItemType> types)
+        {
+            return MaybeFindFirst(types, new Comparator((container, query) => ((HashSet<ItemType>)container).Contains(query) ));
+        }
+
         public void GenerateFood(bool addSpecialFood)
         {
             var emptySpaces = FindAllOfType(ItemType.Empty);
 
             if (emptySpaces.Count <=0) { return; }
 
-            foodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];
+            var foodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];
             emptySpaces.Remove(foodLocation);
             board[foodLocation.Item1][foodLocation.Item2] = ItemType.Food;
 
             if (emptySpaces.Count == 1 || !addSpecialFood) { return; }
 
-            specialFoodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];
+            var specialFoodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];
             specialFoodType = (ItemType) randomNumberGenerator.Next(
                 (int) ItemType.Teleport,
                 Enum.GetValues(typeof(ItemType)).Cast<int>().Max() + 1

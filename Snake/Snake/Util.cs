@@ -9,6 +9,7 @@ using System.Drawing;
 namespace Snake
 {
     using coordinates = Tuple<int, int>;
+    delegate bool Comparator(object container, ItemType query);
 
     internal static class Util
     {
