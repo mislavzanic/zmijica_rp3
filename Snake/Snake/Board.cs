@@ -31,9 +31,9 @@ namespace Snake
                 new Coord(0, -1),
                 new Coord(0, 1)
             };
-        private bool genFood;
         public int Size { get => board.Count; }
-        public bool GenFood { get => genFood; }
+        public bool NoFood { get => MaybeFindFirstOfType(ItemType.Food) == null; }
+
         private readonly HashSet<ItemType> SpecialFoods = new HashSet<ItemType> {
             ItemType.Teleport,
             ItemType.Poison,
@@ -53,8 +53,6 @@ namespace Snake
         public Board(string filepath, out Snek snake, out List<Snek> otherSnakes, uint othersCnt = 0)
         {
             board = Util.LoadMatrix(filepath);
-            genFood = false;
-
             var emptySpaces = FindAllOfType(ItemType.Empty);
 
             this.snake = snake = createSnake(ref emptySpaces);
@@ -184,27 +182,60 @@ namespace Snake
         private bool updateOtherSnake(Snek otherSnake)
         {
             var headXY = otherSnake.Head();
-            var randDirections = possibleDirections.OrderBy(x => randomNumberGenerator.Next()).ToArray();
-            foreach (var direction in randDirections)
+
+            var neighbours = filter(getNeighboursAndDirections(headXY), otherSnake);
+
+            if(neighbours.Count() == 0)
             {
-                var possiblePosition = getNewHead(headXY, direction);
-                
-                if (board[possiblePosition.Item1][possiblePosition.Item2].In(ItemType.Wall, ItemType.Snake))
-                {
-                    continue;
-                }
-                else if (direction.Item1 == otherSnake.Direction.Item1 * -1 && direction.Item2 == otherSnake.Direction.Item2 * -1)
-                {
-                    continue;
-                }
-
-                otherSnake.Direction = direction;
-                var itemSnakeAte = updateSnake(otherSnake);
-
-                if (itemSnakeAte == ItemType.Food){ GenerateFood(false); }
-                return true;
+                return false;
             }
-            return false;
+
+            neighbours = neighbours.OrderBy(x => getItemScore(x.Item1)).ToArray(); 
+            if(
+                !otherSnake.Moving() ||
+                getItemScore(neighbours[0].Item1) < getItemScore(board[headXY.Item1][headXY.Item2]))
+            {
+                otherSnake.Direction = neighbours[0].Item2;
+            }
+
+            updateSnake(otherSnake);
+
+            return true;
+        }
+
+        private Tuple<ItemType, Coord>[] filter(Tuple<ItemType, Coord>[] neighbours, Snek otherSnake)
+        {
+            var result = filterSnakeAndWall(neighbours);
+
+            return filterDirection(result, otherSnake);
+        }
+
+        private Tuple<ItemType, Coord>[] filterSnakeAndWall(Tuple<ItemType, Coord>[] neighbours) => neighbours.Where(
+                x => !x.Item1.In(ItemType.Snake, ItemType.Wall)).ToArray();
+
+        private Tuple<ItemType, Coord>[] filterDirection(Tuple<ItemType, Coord>[] neighbours, Snek otherSnake) => neighbours.Where(
+                x => x.Item2.Item1 != (-1) * otherSnake.Direction.Item1 || x.Item2.Item2 != (-1) * otherSnake.Direction.Item2
+                ).ToArray();
+
+
+
+        private int getItemScore(ItemType x)
+        {
+            return Array.IndexOf(new ItemType[]{
+                ItemType.Vegan,
+                ItemType.Teleport,
+                ItemType.Food,
+                ItemType.Empty,
+                ItemType.Poison,
+                ItemType.Snake,
+                ItemType.Wall
+                }, x);
+        }
+
+
+        private Tuple<ItemType, Coord>[] getNeighboursAndDirections(Coord headXY)
+        {
+            return possibleDirections.Select(x => new Tuple<ItemType, Coord>(getNewItem(headXY, x), x)).ToArray();
         }
 
         public override string ToString()
@@ -242,7 +273,6 @@ namespace Snake
             if (item == ItemType.Food)
             {
                 snakeToUpdate.Body.Add(oldTail);
-                genFood = true;
             }
             else
             {
@@ -258,7 +288,12 @@ namespace Snake
         }
 
         private Coord getNewHead(Coord headXY, Coord direction) => InBounds(new Coord(headXY.Item1 + direction.Item1, headXY.Item2 + direction.Item2));
-      
+        private ItemType getNewItem(Coord headXY, Coord direction) {
+            var location = getNewHead(headXY, direction);
+            return board[location.Item1][location.Item2];
+
+        }
+
         private List<Coord> FindAllOfType(ItemType itemtype)
         {
             var indices = new List<Coord>();
@@ -288,7 +323,7 @@ namespace Snake
         }
         private Coord FindFirstOfType(ItemType type_)
         {
-            var result = MaybeFindFirst(type_, new Comparator((container, query) => (ItemType)container == query));
+            var result = MaybeFindFirstOfType(type_);
 
             if (result == null)
             {
@@ -296,6 +331,11 @@ namespace Snake
             }
 
             return result;
+        }
+
+        private Coord MaybeFindFirstOfType(ItemType type_)
+        {
+            return MaybeFindFirst(type_, new Comparator((container, query) => (ItemType)container == query));
         }
 
         private Coord MaybeFindFirstOfTypes(HashSet<ItemType> types)
@@ -307,7 +347,6 @@ namespace Snake
         {
             var emptySpaces = FindAllOfType(ItemType.Empty);
 
-            genFood = false;
             if (emptySpaces.Count <=0) { return; }
 
             var foodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];

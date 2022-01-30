@@ -64,5 +64,10 @@ namespace Snake
             return tail;
         }
 
+        public bool Moving()
+        {
+            return direction.Item1 != 0 || direction.Item2 != 0;
+        }
+
     }
 }

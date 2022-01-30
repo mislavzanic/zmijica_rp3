@@ -88,7 +88,7 @@ namespace Snake
                 }
             }
 
-            if (board.GenFood)
+            if (board.NoFood)
                 GenerateFood();
         }
 
