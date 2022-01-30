@@ -135,5 +135,11 @@ namespace Snake
             var keyvalues = Enum.GetValues(typeof(Keys)).Cast<Keys>().ToList();
             Properties.Settings.Default["options"] = keyvalues[controlsComboBoxOptions.SelectedIndex];
         }
+
+        private void settingsSaveAsDefaultButton1_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Save();
+            this.Close();
+        }
     }
 }

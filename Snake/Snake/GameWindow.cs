@@ -26,6 +26,7 @@ namespace Snake
                System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer,
                true);
             keysPressed = new KeysPressed();
+            renderInfoTab();
             //KeyPreview = true;
             //startGame(); // ne
         }
@@ -110,6 +111,20 @@ namespace Snake
             myBuffer.Dispose();
         }
 
+        private void renderInfoTab()
+        {
+            pictureBox1.BringToFront();
+            pictureBox2.BringToFront();
+            pictureBox3.BringToFront();
+            pictureBox4.BringToFront();
+            pictureBox5.BringToFront();
+            pictureBox1.CreateGraphics().Clear((Color)Properties.Settings.Default["headColor"]);
+            pictureBox2.CreateGraphics().Clear((Color)Properties.Settings.Default["foodColor"]);
+            pictureBox3.CreateGraphics().Clear((Color)Properties.Settings.Default["shrinkColor"]);
+            pictureBox4.CreateGraphics().Clear((Color)Properties.Settings.Default["poisonColor"]);
+            pictureBox5.CreateGraphics().Clear((Color)Properties.Settings.Default["skipColor"]);
+        }
+
 
         private void KeyPressed(object sender, KeyEventArgs e)
         {
@@ -167,6 +182,7 @@ namespace Snake
 
             Form2 settingsForm = new Form2();
             settingsForm.ShowDialog();
+            renderInfoTab();
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -175,6 +191,11 @@ namespace Snake
             {
                 e.Graphics.DrawString("Poison", myFont, Brushes.Black, new Point(2, 2));
             }
+        }
+
+        private void pictureBox1_Paint_1(object sender, PaintEventArgs e)
+        {
+            renderInfoTab();
         }
     }
 }

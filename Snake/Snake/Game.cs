@@ -31,7 +31,10 @@ namespace Snake
 
         public void render(BufferedGraphics myBuffer, int windowWidth, int windowHeight)
         {
-            levelStack.First().Render(myBuffer, windowWidth, windowHeight);
+            if (levelStack.Count() > 0)
+            {
+                levelStack.First().Render(myBuffer, windowWidth, windowHeight);
+            }
         }
 
         public void tick(int moveCount = 1, bool max = false)
