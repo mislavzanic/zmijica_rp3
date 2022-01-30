@@ -156,14 +156,12 @@ namespace Snake
         public ItemType Update()
         {
             var toRemove = new List<int>();
-            var snakeUpdateResult = updateSnake(snake);
 
             for (var i=0; i<otherSnakes.Count; ++i)
             {
                 if (!updateOtherSnake(otherSnakes[i]))
                 {
                     toRemove.Add(i);
-                    //MessageBox.Show($"couldn't update snake {i}");
                 }
                 if (otherSnakes[i].Body.Count == 0)
                 {
@@ -176,7 +174,7 @@ namespace Snake
                 otherSnakes.RemoveAt(i);
             }
 
-            return snakeUpdateResult;
+            return updateSnake(snake);
         }
 
         private bool updateOtherSnake(Snek otherSnake)
