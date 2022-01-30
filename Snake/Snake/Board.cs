@@ -21,7 +21,9 @@ namespace Snake
     internal class Board
     {
         private readonly List<List<ItemType>> board;
-        private readonly Snek snake;
+        private Snek snake;
+        private List<Snek> otherSnakes = new List<Snek>();
+
 
         private readonly int _Size;
         public int Size { get => _Size; }
@@ -45,15 +47,32 @@ namespace Snake
         private readonly Random randomNumberGenerator = new Random();
 
 
-        public Board(string filepath, out Snek snake)
+        public Board(string filepath, out Snek snake, out List<Snek> otherSnakes, uint othersCnt = 0)
         {
             board = Util.LoadMatrix(filepath);
             _Size = board.Count;
 
-            var emptySpaces = FindAllOfType(ItemType.Empty);            
-            snake = new Snek(emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)]);
-            this.snake = snake;
+            var emptySpaces = FindAllOfType(ItemType.Empty);
+
+            this.snake = snake = createSnake(ref emptySpaces);
+
+            for(var i=0; i<othersCnt; i++)
+            {
+                this.otherSnakes.Append(createSnake(ref emptySpaces));
+            }
+
+            otherSnakes = this.otherSnakes;
+        }
+
+        private Snek createSnake(ref List<Coord> emptySpaces)
+        {
+            var location = randomNumberGenerator.Next(emptySpaces.Count);
+            var snake = new Snek(emptySpaces[location]);
+            
+            emptySpaces.RemoveAt(location);
             board[snake.Head().Item1][snake.Head().Item2] = ItemType.Snake;
+           
+            return snake;
         }
 
         public void Render(BufferedGraphics myBuffer, float rW, float rH)

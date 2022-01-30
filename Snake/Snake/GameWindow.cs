@@ -74,8 +74,6 @@ namespace Snake
                 {
                     game.handleInput(new Tuple<int,int>(0,1));
                 }
-
-            
            
                 if (shift)
                 {
@@ -88,8 +86,6 @@ namespace Snake
                 shift = false;
                 
             }
-
-            
 
             scoreLabel.Text = "Score: " + game.Score.ToString();
             keysPressed.reset();

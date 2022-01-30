@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace Snake
     {
         private readonly Board board;
         private readonly Snek snake;
+        private readonly List<Snek> otherSnakes;
         private bool activeGame = true;
         private bool defeat = false;
         private int score = 0;
@@ -22,10 +24,10 @@ namespace Snake
         public bool ActiveGame { get => activeGame; }
         public bool Defeat { get => defeat; }
         public Coord SnakeDirection { get => snake.Direction; }
-        public Level(string filepath, int scoreToPass)
+        public Level(string filepath, int scoreToPass, uint snakes=0)
         {
             this.scoreToPass = scoreToPass;
-            board = new Board(filepath, out snake);
+            board = new Board(filepath, out snake, out otherSnakes, snakes);
             GenerateFood();
         }
 
