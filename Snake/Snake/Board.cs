@@ -31,18 +31,10 @@ namespace Snake
                 new Coord(0, -1),
                 new Coord(0, 1)
             };
-
-<<<<<<< HEAD
-        public int Size { get => board.Count; }
-        
-        private readonly HashSet<ItemType> SpecialFoods = new HashSet<ItemType> {
-=======
         private bool genFood;
-        private readonly int _Size;
-        public int Size { get => _Size; }
+        public int Size { get => board.Count; }
         public bool GenFood { get => genFood; }
-        private ItemType[] SpecialFoods = new ItemType[] {
->>>>>>> cc7b9ac (rj bug sa dvije zmijice)
+        private readonly HashSet<ItemType> SpecialFoods = new HashSet<ItemType> {
             ItemType.Teleport,
             ItemType.Poison,
             ItemType.Vegan
@@ -61,11 +53,7 @@ namespace Snake
         public Board(string filepath, out Snek snake, out List<Snek> otherSnakes, uint othersCnt = 0)
         {
             board = Util.LoadMatrix(filepath);
-<<<<<<< HEAD
-=======
             genFood = false;
-            _Size = board.Count;
->>>>>>> cc7b9ac (rj bug sa dvije zmijice)
 
             var emptySpaces = FindAllOfType(ItemType.Empty);
 
