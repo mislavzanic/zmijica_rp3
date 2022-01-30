@@ -169,7 +169,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Linen")]
         public global::System.Drawing.Color bgColor {
             get {
                 return ((global::System.Drawing.Color)(this["bgColor"]));
@@ -181,7 +181,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Blue")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 64, 0")]
         public global::System.Drawing.Color headColor {
             get {
                 return ((global::System.Drawing.Color)(this["headColor"]));
@@ -193,7 +193,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Olive")]
         public global::System.Drawing.Color snekColor {
             get {
                 return ((global::System.Drawing.Color)(this["snekColor"]));
@@ -205,7 +205,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Green")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Salmon")]
         public global::System.Drawing.Color foodColor {
             get {
                 return ((global::System.Drawing.Color)(this["foodColor"]));
@@ -217,7 +217,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Maroon")]
         public global::System.Drawing.Color obstacleColor {
             get {
                 return ((global::System.Drawing.Color)(this["obstacleColor"]));
@@ -229,7 +229,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("128, 255, 255")]
+        [global::System.Configuration.DefaultSettingValueAttribute("255, 255, 128")]
         public global::System.Drawing.Color skipColor {
             get {
                 return ((global::System.Drawing.Color)(this["skipColor"]));
@@ -241,7 +241,7 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192, 0, 192")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Purple")]
         public global::System.Drawing.Color poisonColor {
             get {
                 return ((global::System.Drawing.Color)(this["poisonColor"]));
@@ -253,13 +253,49 @@ namespace Snake.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192, 255, 192")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192, 192, 255")]
         public global::System.Drawing.Color shrinkColor {
             get {
                 return ((global::System.Drawing.Color)(this["shrinkColor"]));
             }
             set {
                 this["shrinkColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("64, 0, 0")]
+        public global::System.Drawing.Color obstacleOutline {
+            get {
+                return ((global::System.Drawing.Color)(this["obstacleOutline"]));
+            }
+            set {
+                this["obstacleOutline"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("64, 64, 64")]
+        public global::System.Drawing.Color foodOutline {
+            get {
+                return ((global::System.Drawing.Color)(this["foodOutline"]));
+            }
+            set {
+                this["foodOutline"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("64, 64, 0")]
+        public global::System.Drawing.Color snakeOutline {
+            get {
+                return ((global::System.Drawing.Color)(this["snakeOutline"]));
+            }
+            set {
+                this["snakeOutline"] = value;
             }
         }
     }

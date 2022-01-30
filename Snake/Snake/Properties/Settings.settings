@@ -39,28 +39,37 @@
       <Value Profile="(Default)">O</Value>
     </Setting>
     <Setting Name="bgColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">White</Value>
+      <Value Profile="(Default)">Linen</Value>
     </Setting>
     <Setting Name="headColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Blue</Value>
+      <Value Profile="(Default)">0, 64, 0</Value>
     </Setting>
     <Setting Name="snekColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Black</Value>
+      <Value Profile="(Default)">Olive</Value>
     </Setting>
     <Setting Name="foodColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Green</Value>
+      <Value Profile="(Default)">Salmon</Value>
     </Setting>
     <Setting Name="obstacleColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Red</Value>
+      <Value Profile="(Default)">Maroon</Value>
     </Setting>
     <Setting Name="skipColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">128, 255, 255</Value>
+      <Value Profile="(Default)">255, 255, 128</Value>
     </Setting>
     <Setting Name="poisonColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">192, 0, 192</Value>
+      <Value Profile="(Default)">Purple</Value>
     </Setting>
     <Setting Name="shrinkColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">192, 255, 192</Value>
+      <Value Profile="(Default)">192, 192, 255</Value>
+    </Setting>
+    <Setting Name="obstacleOutline" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">64, 0, 0</Value>
+    </Setting>
+    <Setting Name="foodOutline" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">64, 64, 64</Value>
+    </Setting>
+    <Setting Name="snakeOutline" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">64, 64, 0</Value>
     </Setting>
   </Settings>
 </SettingsFile>
