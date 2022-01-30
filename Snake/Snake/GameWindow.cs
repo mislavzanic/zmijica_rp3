@@ -55,7 +55,7 @@ namespace Snake
             }
             else if (keysPressed.Ctrl)
             {
-                //nesto
+                game.pause();
             }
             else
             {

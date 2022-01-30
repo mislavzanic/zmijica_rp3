@@ -13,6 +13,8 @@ namespace Snake
         private Stack<Level> levelStack;
         private bool activeGame;
         private int score;
+        private bool isPaused;
+        private int availablePauses;
 
         public int Score { get => (levelStack.Count > 0) ? score + levelStack.First().Score : score; }
         public bool ActiveGame { get => activeGame; }
@@ -21,12 +23,17 @@ namespace Snake
         public Game()
         {
             levelStack = new Stack<Level>();
-            levelStack.Push(new Level("..\\..\\assets\\level3.txt", 10, 10));
-            //levelStack.Push(new Level("..\\..\\assets\\level3.txt", 100));
-            //levelStack.Push(new Level("..\\..\\assets\\level2.txt", 25));
-            //levelStack.Push(new Level("..\\..\\assets\\level1.txt", 10));
+            levelStack.Push(new Level("..\\..\\assets\\level3.txt", 90, 15));
+            levelStack.Push(new Level("..\\..\\assets\\level3.txt", 75, 8));
+            levelStack.Push(new Level("..\\..\\assets\\level3.txt", 50, 3));
+            levelStack.Push(new Level("..\\..\\assets\\level3.txt", 40));
+            levelStack.Push(new Level("..\\..\\assets\\level2.txt", 30, 5));
+            levelStack.Push(new Level("..\\..\\assets\\level2.txt", 25));
+            levelStack.Push(new Level("..\\..\\assets\\level1.txt", 10));
             activeGame = true;
             score = 0;
+            isPaused = false;
+            availablePauses = 3;
         }
 
         public void render(BufferedGraphics myBuffer, int windowWidth, int windowHeight)
@@ -39,6 +46,10 @@ namespace Snake
 
         public void tick(int moveCount = 1, bool max = false)
         {
+            if (isPaused)
+            {
+                return;
+            }
             var currentLevel = levelStack.First();
             currentLevel.Tick(moveCount, max);
 
@@ -62,6 +73,21 @@ namespace Snake
             }
         }
 
+        public void pause()
+        {
+            if (isPaused)
+            {
+                isPaused = false;
+            }
+            else
+            {
+                if (availablePauses > 0)
+                {
+                    --availablePauses;
+                    isPaused = true;
+                }
+            }
+        }
         public void handleInput(Coord newDirection)
         {
             levelStack.First().UpdateSnakeDirection(newDirection);
