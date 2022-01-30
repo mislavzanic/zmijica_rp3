@@ -60,9 +60,6 @@ namespace Snake
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.settingsOKButton1 = new System.Windows.Forms.Button();
             this.settingsSaveAsDefaultButton1 = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.settingsTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -79,14 +76,11 @@ namespace Snake
             this.panel6.SuspendLayout();
             this.panel8.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // settingsTabControl
             // 
             this.settingsTabControl.Controls.Add(this.tabPage1);
-            this.settingsTabControl.Controls.Add(this.tabPage2);
-            this.settingsTabControl.Controls.Add(this.tabPage3);
             this.settingsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.settingsTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.settingsTabControl.Location = new System.Drawing.Point(0, 0);
@@ -306,9 +300,9 @@ namespace Snake
             this.controlsLabelCtrl.AutoSize = true;
             this.controlsLabelCtrl.Location = new System.Drawing.Point(3, 20);
             this.controlsLabelCtrl.Name = "controlsLabelCtrl";
-            this.controlsLabelCtrl.Size = new System.Drawing.Size(121, 29);
+            this.controlsLabelCtrl.Size = new System.Drawing.Size(115, 36);
             this.controlsLabelCtrl.TabIndex = 16;
-            this.controlsLabelCtrl.Text = "To Body: ";
+            this.controlsLabelCtrl.Text = "Pause:";
             // 
             // controlsComboBoxCtrl
             // 
@@ -413,39 +407,6 @@ namespace Snake
             this.settingsSaveAsDefaultButton1.UseVisualStyleBackColor = true;
             this.settingsSaveAsDefaultButton1.Click += new System.EventHandler(this.settingsSaveAsDefaultButton1_Click);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.flowLayoutPanel2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 38);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(809, 625);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Difficulty";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 2);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(803, 621);
-            this.flowLayoutPanel2.TabIndex = 0;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 38);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(809, 625);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Appearance";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -480,7 +441,6 @@ namespace Snake
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.flowLayoutPanel3.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -490,9 +450,6 @@ namespace Snake
         private System.Windows.Forms.TabControl settingsTabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button settingsOKButton1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button settingsSaveAsDefaultButton1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
