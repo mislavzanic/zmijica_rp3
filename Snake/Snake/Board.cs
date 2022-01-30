@@ -14,6 +14,7 @@ namespace Snake
         Food,
         Snake,
         Wall,
+        OtherSnake,
         Teleport,
         Poison,
         Vegan
@@ -59,18 +60,20 @@ namespace Snake
 
             for(var i=0; i<othersCnt; i++)
             {
-                this.otherSnakes.Add(createSnake(ref emptySpaces));
+                this.otherSnakes.Add(createSnake(ref emptySpaces, true));
             }
             otherSnakes = this.otherSnakes;
+
+            MessageBox.Show(ToString());
         }
 
-        private Snek createSnake(ref List<Coord> emptySpaces)
+        private Snek createSnake(ref List<Coord> emptySpaces, bool other = false)
         {
             var location = randomNumberGenerator.Next(emptySpaces.Count);
             var snake = new Snek(emptySpaces[location]);
             
             emptySpaces.RemoveAt(location);
-            board[snake.Head().Item1][snake.Head().Item2] = ItemType.Snake;
+            board[snake.Head().Item1][snake.Head().Item2] = other ? ItemType.OtherSnake : ItemType.Snake;
            
             return snake;
         }
@@ -131,7 +134,7 @@ namespace Snake
 
             for (var i = 1; i < row.Count; i++)
             {
-                if (row[InBounds(start.Item2 + i * direction)].In(ItemType.Wall, ItemType.Snake))
+                if (row[InBounds(start.Item2 + i * direction)].In(ItemType.Wall, ItemType.Snake, ItemType.OtherSnake))
                 {
                     return i-1;
                 }
@@ -144,7 +147,7 @@ namespace Snake
         {
             for (var i = 1; i < board.Count; i++)
             {
-                if (board[InBounds(start.Item1 + i * direction)][start.Item2].In(ItemType.Wall, ItemType.Snake))
+                if (board[InBounds(start.Item1 + i * direction)][start.Item2].In(ItemType.Wall, ItemType.Snake, ItemType.OtherSnake))
                 {
                     return i-1;
                 }
@@ -159,13 +162,15 @@ namespace Snake
 
             for (var i=0; i<otherSnakes.Count; ++i)
             {
-                if (!updateOtherSnake(otherSnakes[i]))
+                var updateResult = updateOtherSnake(otherSnakes[i]);
+                if (!updateResult.Item1)
                 {
                     toRemove.Add(i);
                 }
-                if (otherSnakes[i].Body.Count == 0)
+                if (updateResult.Item2)
                 {
-                    toRemove.Add(i);
+                    updateSnake(snake);
+                    return ItemType.Snake;
                 }
             }
 
@@ -177,7 +182,7 @@ namespace Snake
             return updateSnake(snake);
         }
 
-        private bool updateOtherSnake(Snek otherSnake)
+        private Tuple<bool, bool> updateOtherSnake(Snek otherSnake)
         {
             var headXY = otherSnake.Head();
 
@@ -185,31 +190,26 @@ namespace Snake
 
             if(neighbours.Count() == 0)
             {
-                return false;
+                return new Tuple<bool, bool>(false, false);
             }
 
             neighbours = neighbours.OrderBy(x => getItemScore(x.Item1)).ToArray(); 
-            if(
-                !otherSnake.Moving() ||
-                getItemScore(neighbours[0].Item1) < getItemScore(board[headXY.Item1][headXY.Item2]))
-            {
-                otherSnake.Direction = neighbours[0].Item2;
-            }
+            otherSnake.Direction = neighbours[0].Item2;
 
-            updateSnake(otherSnake);
-
-            return true;
+            var updateResult = updateSnake(otherSnake, true);
+            
+            return new Tuple<bool, bool>(true, snake.Body.Contains(otherSnake.Head()));
         }
 
         private Tuple<ItemType, Coord>[] filter(Tuple<ItemType, Coord>[] neighbours, Snek otherSnake)
         {
-            var result = filterSnakeAndWall(neighbours);
+            var result = filterOtherSnakeAndWall(neighbours);
 
             return filterDirection(result, otherSnake);
         }
 
-        private Tuple<ItemType, Coord>[] filterSnakeAndWall(Tuple<ItemType, Coord>[] neighbours) => neighbours.Where(
-                x => !x.Item1.In(ItemType.Snake, ItemType.Wall)).ToArray();
+        private Tuple<ItemType, Coord>[] filterOtherSnakeAndWall(Tuple<ItemType, Coord>[] neighbours) => neighbours.Where(
+                x => !x.Item1.In(ItemType.OtherSnake, ItemType.Wall)).ToArray();
 
         private Tuple<ItemType, Coord>[] filterDirection(Tuple<ItemType, Coord>[] neighbours, Snek otherSnake) => neighbours.Where(
                 x => x.Item2.Item1 != (-1) * otherSnake.Direction.Item1 || x.Item2.Item2 != (-1) * otherSnake.Direction.Item2
@@ -220,12 +220,13 @@ namespace Snake
         private int getItemScore(ItemType x)
         {
             return Array.IndexOf(new ItemType[]{
+                ItemType.Snake,
                 ItemType.Vegan,
                 ItemType.Teleport,
                 ItemType.Food,
                 ItemType.Empty,
                 ItemType.Poison,
-                ItemType.Snake,
+                ItemType.OtherSnake,
                 ItemType.Wall
                 }, x);
         }
@@ -251,7 +252,7 @@ namespace Snake
             return string.Join("\n", boardrepr);
         }
 
-        private ItemType updateSnake(Snek snakeToUpdate)
+        private ItemType updateSnake(Snek snakeToUpdate, bool other = false)
         {
             var oldTailXY = snakeToUpdate.Tail();
             var headXY = snakeToUpdate.Head();
@@ -260,7 +261,7 @@ namespace Snake
             snakeToUpdate.Move(newHeadXY);
 
             var itemSnakeAte = board[newHeadXY.Item1][newHeadXY.Item2];
-            board[newHeadXY.Item1][newHeadXY.Item2] = ItemType.Snake;
+            board[newHeadXY.Item1][newHeadXY.Item2] = other? ItemType.OtherSnake : ItemType.Snake;
 
             processItemSnakeAte(itemSnakeAte, snakeToUpdate, oldTailXY);
             return itemSnakeAte;
