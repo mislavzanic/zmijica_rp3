@@ -21,7 +21,8 @@ namespace Snake
         public Game()
         {
             levelStack = new Stack<Level>();
-            levelStack.Push(new Level("..\\..\\assets\\level3.txt", 100));
+            levelStack.Push(new Level("..\\..\\assets\\level1.txt", 10, 2));
+            //levelStack.Push(new Level("..\\..\\assets\\level3.txt", 100));
             //levelStack.Push(new Level("..\\..\\assets\\level2.txt", 25));
             //levelStack.Push(new Level("..\\..\\assets\\level1.txt", 10));
             activeGame = true;

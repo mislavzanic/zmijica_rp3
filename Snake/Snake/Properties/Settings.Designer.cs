@@ -298,5 +298,29 @@ namespace Snake.Properties {
                 this["snakeOutline"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Lavender")]
+        public global::System.Drawing.Color otherSnekColor {
+            get {
+                return ((global::System.Drawing.Color)(this["otherSnekColor"]));
+            }
+            set {
+                this["otherSnekColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LightSteelBlue")]
+        public global::System.Drawing.Color otherHeadColor {
+            get {
+                return ((global::System.Drawing.Color)(this["otherHeadColor"]));
+            }
+            set {
+                this["otherHeadColor"] = value;
+            }
+        }
     }
 }
