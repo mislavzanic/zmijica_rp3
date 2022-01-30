@@ -31,9 +31,9 @@ namespace Snake
                 new Coord(0, -1),
                 new Coord(0, 1)
             };
-
+        private bool genFood;
         public int Size { get => board.Count; }
-        
+        public bool GenFood { get => genFood; }
         private readonly HashSet<ItemType> SpecialFoods = new HashSet<ItemType> {
             ItemType.Teleport,
             ItemType.Poison,
@@ -53,6 +53,7 @@ namespace Snake
         public Board(string filepath, out Snek snake, out List<Snek> otherSnakes, uint othersCnt = 0)
         {
             board = Util.LoadMatrix(filepath);
+            genFood = false;
 
             var emptySpaces = FindAllOfType(ItemType.Empty);
 
@@ -164,7 +165,11 @@ namespace Snake
                 if (!updateOtherSnake(otherSnakes[i]))
                 {
                     toRemove.Add(i);
-                    MessageBox.Show($"couldn't update snake {i}");
+                    //MessageBox.Show($"couldn't update snake {i}");
+                }
+                if (otherSnakes[i].Body.Count == 0)
+                {
+                    toRemove.Add(i);
                 }
             }
 
@@ -179,11 +184,16 @@ namespace Snake
         private bool updateOtherSnake(Snek otherSnake)
         {
             var headXY = otherSnake.Head();
-            foreach (var direction in possibleDirections)
+            var randDirections = possibleDirections.OrderBy(x => randomNumberGenerator.Next()).ToArray();
+            foreach (var direction in randDirections)
             {
                 var possiblePosition = getNewHead(headXY, direction);
-
+                
                 if (board[possiblePosition.Item1][possiblePosition.Item2].In(ItemType.Wall, ItemType.Snake))
+                {
+                    continue;
+                }
+                else if (direction.Item1 == otherSnake.Direction.Item1 * -1 && direction.Item2 == otherSnake.Direction.Item2 * -1)
                 {
                     continue;
                 }
@@ -232,6 +242,7 @@ namespace Snake
             if (item == ItemType.Food)
             {
                 snakeToUpdate.Body.Add(oldTail);
+                genFood = true;
             }
             else
             {
@@ -296,6 +307,7 @@ namespace Snake
         {
             var emptySpaces = FindAllOfType(ItemType.Empty);
 
+            genFood = false;
             if (emptySpaces.Count <=0) { return; }
 
             var foodLocation = emptySpaces[randomNumberGenerator.Next(emptySpaces.Count)];

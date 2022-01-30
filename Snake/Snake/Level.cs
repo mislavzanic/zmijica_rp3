@@ -56,7 +56,6 @@ namespace Snake
         {
             if (snake.Direction.Item1 == 0 && snake.Direction.Item2 == 0) { return; }
 
-            bool generateNew = false;
 
             if (max)
             {
@@ -69,7 +68,6 @@ namespace Snake
                 switch (board.Update())
                 {
                     case ItemType.Food:
-                        generateNew = true;
                         newPoint();
                         break;
                     case ItemType.Poison:
@@ -90,7 +88,7 @@ namespace Snake
                 }
             }
 
-            if (generateNew)
+            if (board.GenFood)
                 GenerateFood();
         }
 
