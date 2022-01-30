@@ -184,9 +184,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(1033, 411);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 17);
+            this.label3.Size = new System.Drawing.Size(120, 17);
             this.label3.TabIndex = 11;
-            this.label3.Text = "+1 Score";
+            this.label3.Text = "+1 Score, -1 Size";
             // 
             // label4
             // 
