@@ -63,8 +63,6 @@ namespace Snake
                 this.otherSnakes.Add(createSnake(ref emptySpaces, true));
             }
             otherSnakes = this.otherSnakes;
-
-            MessageBox.Show(ToString());
         }
 
         private Snek createSnake(ref List<Coord> emptySpaces, bool other = false)
