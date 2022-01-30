@@ -71,5 +71,11 @@
     <Setting Name="snakeOutline" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">64, 64, 0</Value>
     </Setting>
+    <Setting Name="otherSnekColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Lavender</Value>
+    </Setting>
+    <Setting Name="otherHeadColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">LightSteelBlue</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Snake
 {
@@ -21,11 +22,17 @@ namespace Snake
     internal class Board
     {
         private readonly List<List<ItemType>> board;
-        private Snek snake;
-        private List<Snek> otherSnakes = new List<Snek>();
+        private readonly Snek snake;
+        private readonly List<Snek> otherSnakes = new List<Snek>();
+        private readonly List<Coord> possibleDirections = new List<Coord>()
+            {
+                new Coord(-1, 0),
+                new Coord(1, 0),
+                new Coord(0, 1),
+                new Coord(0, -1)
+            };
 
-
-        private readonly int _Size;
+    private readonly int _Size;
         public int Size { get => _Size; }
         private ItemType[] SpecialFoods = new ItemType[] {
             ItemType.Teleport,
@@ -58,9 +65,8 @@ namespace Snake
 
             for(var i=0; i<othersCnt; i++)
             {
-                this.otherSnakes.Append(createSnake(ref emptySpaces));
+                this.otherSnakes.Add(createSnake(ref emptySpaces));
             }
-
             otherSnakes = this.otherSnakes;
         }
 
@@ -97,6 +103,11 @@ namespace Snake
                 Util.FillAndOutlineRect(myBuffer.Graphics, brush, pen, wallLocation, rW, rH);
             }
             snake.Render(myBuffer, rW, rH);
+
+            foreach(var otherSnake in otherSnakes)
+            {
+                otherSnake.Render(myBuffer, rW, rH, true);
+            }
         }
 
         private Coord InBounds(Coord coord) => new Coord(InBounds(coord.Item1), InBounds(coord.Item2));
@@ -148,39 +159,102 @@ namespace Snake
 
         public ItemType Update()
         {
-            var oldTailXY = snake.Tail();
-            var headXY = snake.Head();
-            var newHeadXY = InBounds(new Coord(headXY.Item1 + snake.Direction.Item1, headXY.Item2 + snake.Direction.Item2));
-            snake.Move(newHeadXY);
-            headXY = newHeadXY;
+            var toRemove = new List<int>();
+            var snakeUpdateResult = updateSnake(snake);
 
-            var itemAtHeadXY = board[headXY.Item1][headXY.Item2];
+            for (var i=0; i<otherSnakes.Count; ++i)
+            {
+                if (!updateOtherSnake(otherSnakes[i]))
+                {
+                    toRemove.Add(i);
+                    MessageBox.Show($"couldn't update snake {i}");
+                }
+            }
+
+            foreach(var i in toRemove)
+            {
+                otherSnakes.RemoveAt(i);
+            }
+
+            return snakeUpdateResult;
+        }
+
+        private bool updateOtherSnake(Snek otherSnake)
+        {
+            var headXY = otherSnake.Head();
+            foreach (var direction in possibleDirections)
+            {
+                var possiblePosition = getNewHead(headXY, direction);
+
+                if (board[possiblePosition.Item1][possiblePosition.Item2].In(ItemType.Wall, ItemType.Snake))
+                {
+                    continue;
+                }
+
+                otherSnake.Direction = direction;
+                updateSnake(otherSnake);
+                return true;
+            }
+            return false;
+        }
+
+        public override string ToString()
+        {
+            var boardrepr = new List<string>();
+            foreach(var row in board) // remove public
+            {
+                var rowrepr = new List<string>();
+                foreach(var cell in row)
+                {
+                    rowrepr.Add(((int) cell).ToString());
+                }
+                boardrepr.Add(string.Join(" ", rowrepr));
+            }
+            return string.Join("\n", boardrepr);
+        }
+
+        private ItemType updateSnake(Snek snakeToUpdate)
+        {
+            var oldTailXY = snakeToUpdate.Tail();
+            var headXY = snakeToUpdate.Head();
             
-            if (itemAtHeadXY.In(SpecialFoods)) {
+            var newHeadXY = getNewHead(headXY, snakeToUpdate.Direction);
+            snakeToUpdate.Move(newHeadXY);
+
+            var itemSnakeAte = board[newHeadXY.Item1][newHeadXY.Item2];
+            board[newHeadXY.Item1][newHeadXY.Item2] = ItemType.Snake;
+
+            processItemSnakeAte(itemSnakeAte, snakeToUpdate, oldTailXY);
+            return itemSnakeAte;
+        }
+
+        private void processItemSnakeAte(ItemType item, Snek snakeToUpdate, Coord oldTail)
+        {
+            if (item.In(SpecialFoods))
+            {
                 specialFoodLocation = null;
             }
 
-            board[headXY.Item1][headXY.Item2] = ItemType.Snake;
 
-            if (itemAtHeadXY == ItemType.Food)
+            if (item == ItemType.Food)
             {
-                snake.Body.Add(oldTailXY);
+                snakeToUpdate.Body.Add(oldTail);
             }
             else
             {
-                board[oldTailXY.Item1][oldTailXY.Item2] = ItemType.Empty;
+                board[oldTail.Item1][oldTail.Item2] = ItemType.Empty;
             }
 
-            if (itemAtHeadXY == ItemType.Vegan)
+            if (item == ItemType.Vegan)
             {
-                var tailXY = snake.Tail();
+                var tailXY = snakeToUpdate.Tail();
                 board[tailXY.Item1][tailXY.Item2] = ItemType.Empty;
-                snake.Body.Remove(tailXY);
+                snakeToUpdate.Body.Remove(tailXY);
             }
-
-            return itemAtHeadXY;
         }
 
+        private Coord getNewHead(Coord headXY, Coord direction) => InBounds(new Coord(headXY.Item1 + direction.Item1, headXY.Item2 + direction.Item2));
+      
         private List<Coord> FindAllOfType(ItemType itemtype)
         {
             var indices = new List<Coord>();

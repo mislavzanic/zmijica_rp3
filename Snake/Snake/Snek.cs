@@ -12,7 +12,15 @@ namespace Snake
     {
         private readonly List<Coord> bodyCoords = new List<Coord>();
         private Coord direction = new Coord(0, 0);
-        
+        private readonly Dictionary<string, Color> colors = new Dictionary<string, Color>()
+        {
+            { "snake", (Color)Properties.Settings.Default["snekColor"] },
+            { "head", (Color)Properties.Settings.Default["headColor"] },
+            { "otherSnake", (Color)Properties.Settings.Default["otherSnekColor"]},
+            { "otherHead", (Color)Properties.Settings.Default["otherHeadColor"]},
+            { "outline", (Color)Properties.Settings.Default["snakeOutline"]}
+        };
+
         public List<Coord> Body { get => bodyCoords; }
         public Coord Direction
         {
@@ -33,15 +41,16 @@ namespace Snake
         public Coord Head() => bodyCoords.First();
         public Coord Tail() => bodyCoords.Last();
         public void ShrinkTail() => bodyCoords.Remove(bodyCoords.Last());
-        public void Render(BufferedGraphics myBuffer, float rW, float rH)
+        public void Render(BufferedGraphics myBuffer, float rW, float rH, bool isOther = false)
         {
-            var pen = new Pen((Color)Properties.Settings.Default["snakeOutline"]);
-            var brush = new SolidBrush((Color)Properties.Settings.Default["headColor"]);
+            var pen = new Pen(colors["outline"]);
+
+            var brush = isOther ? new SolidBrush(colors["otherHead"]) : new SolidBrush(colors["head"]);
 
             Util.FillAndOutlineRect(myBuffer.Graphics, brush, pen, bodyCoords[0], rW, rH);
 
-            brush.Color = (Color)Properties.Settings.Default["snekColor"];
-            foreach(var bodyCoord in bodyCoords.Skip(1))
+            brush.Color = isOther ? colors["otherSnake"] : colors["snake"];
+            foreach (var bodyCoord in bodyCoords.Skip(1))
             {
                 Util.FillAndOutlineRect(myBuffer.Graphics, brush, pen, bodyCoord, rW, rH);
             }
