@@ -32,7 +32,7 @@ namespace Snake
                 new Coord(0, -1)
             };
 
-    private readonly int _Size;
+        private readonly int _Size;
         public int Size { get => _Size; }
         private ItemType[] SpecialFoods = new ItemType[] {
             ItemType.Teleport,
@@ -192,7 +192,12 @@ namespace Snake
                 }
 
                 otherSnake.Direction = direction;
-                updateSnake(otherSnake);
+                var itemSnakeAte = updateSnake(otherSnake);
+
+                if (itemSnakeAte == ItemType.Food)
+                {
+                    GenerateFood(false);
+                }
                 return true;
             }
             return false;
@@ -245,7 +250,7 @@ namespace Snake
                 board[oldTail.Item1][oldTail.Item2] = ItemType.Empty;
             }
 
-            if (item == ItemType.Vegan)
+            if (item == ItemType.Vegan && snakeToUpdate.Body.Count > 2)
             {
                 var tailXY = snakeToUpdate.Tail();
                 board[tailXY.Item1][tailXY.Item2] = ItemType.Empty;
